@@ -4,7 +4,6 @@ import { Route } from 'react-router-dom'
 import AuthenticatedRoute from '../AuthenticatedRoute/AuthenticatedRoute'
 import AutoDismissAlert from '../AutoDismissAlert/AutoDismissAlert'
 import Header from '../Header/Header'
-import SignUp from '../SignUp/SignUp'
 import SignIn from '../SignIn/SignIn'
 import SignOut from '../SignOut/SignOut'
 import ChangePassword from '../ChangePassword/ChangePassword'
@@ -15,9 +14,14 @@ class App extends Component {
 
     this.state = {
       user: null,
-      alerts: []
+      alerts: [],
+      show: false
     }
   }
+
+  handleClose = () => this.setState({ show: false })
+
+  handleShow = () => this.setState({ show: true })
 
   setUser = user => this.setState({ user })
 
@@ -28,11 +32,11 @@ class App extends Component {
   }
 
   render () {
-    const { alerts, user } = this.state
+    const { alerts, user, show } = this.state
 
     return (
       <Fragment>
-        <Header user={user} />
+        <Header user={user} setUser={this.setUser} alert={this.alert} show={show} handleClose={this.handleClose} handleShow={this.handleShow} />
         {alerts.map((alert, index) => (
           <AutoDismissAlert
             key={index}
@@ -42,14 +46,11 @@ class App extends Component {
           />
         ))}
         <main className="container">
-          <Route path='/sign-up' render={() => (
-            <SignUp alert={this.alert} setUser={this.setUser} />
-          )} />
           <Route path='/sign-in' render={() => (
             <SignIn alert={this.alert} setUser={this.setUser} />
           )} />
           <AuthenticatedRoute user={user} path='/sign-out' render={() => (
-            <SignOut alert={this.alert} clearUser={this.clearUser} user={user} />
+            <SignOut handleClose={this.handleClose} alert={this.alert} clearUser={this.clearUser} user={user} />
           )} />
           <AuthenticatedRoute user={user} path='/change-password' render={() => (
             <ChangePassword alert={this.alert} user={user} />
