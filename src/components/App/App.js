@@ -4,7 +4,6 @@ import AuthenticatedRoute from '../AuthenticatedRoute/AuthenticatedRoute'
 import AutoDismissAlert from '../AutoDismissAlert/AutoDismissAlert'
 import Header from '../Header/Header'
 import SignOut from '../SignOut/SignOut'
-import ChangePassword from '../ChangePassword/ChangePassword'
 
 class App extends Component {
   constructor () {
@@ -46,9 +45,6 @@ class App extends Component {
         <main className="container">
           <AuthenticatedRoute user={user} path='/sign-out' render={() => (
             <SignOut handleClose={this.handleClose} alert={this.alert} clearUser={this.clearUser} user={user} />
-          )} />
-          <AuthenticatedRoute user={user} path='/change-password' render={() => (
-            <ChangePassword alert={this.alert} user={user} />
           )} />
         </main>
       </Fragment>

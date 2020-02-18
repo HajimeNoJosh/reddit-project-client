@@ -23,7 +23,7 @@ class SignIn extends Component {
 
   onSignIn = event => {
     event.preventDefault()
-
+    console.log(this.props)
     const { alert, history, setUser } = this.props
 
     signIn(this.state)
@@ -33,6 +33,7 @@ class SignIn extends Component {
         message: messages.signInSuccess,
         variant: 'success'
       }))
+      .then(() => this.props.handleClose())
       .then(() => history.push('/'))
       .catch(error => {
         console.error(error)
@@ -51,7 +52,6 @@ class SignIn extends Component {
     return (
       <div className="row">
         <div className="col-sm-10 col-md-8 mx-auto mt-5">
-          <h3>Sign In</h3>
           <Form onSubmit={this.onSignIn}>
             <Form.Group controlId="email">
               <Form.Label>Email address</Form.Label>
@@ -81,6 +81,7 @@ class SignIn extends Component {
             >
               Submit
             </Button>
+            <div>Don&apos;t have an account yet? <a onClick={() => this.props.modalType('Sign Up')} >Click here</a></div>
           </Form>
         </div>
       </div>

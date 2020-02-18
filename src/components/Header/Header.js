@@ -5,19 +5,32 @@ import ModalTemplate from '../ModalTemplate/ModalTemplate'
 import SignUp from '../SignUp/SignUp'
 import SignIn from '../SignIn/SignIn'
 import { Button } from 'react-bootstrap'
+import ChangePassword from '../ChangePassword/ChangePassword'
 
 const Header = (props) => {
-  const [modalType, setModalType] = useState('')
+  const [modalType, setModalType] = useState(null)
 
   const openModal = (type, handleShow) => {
     setModalType(type)
     handleShow && props.handleShow()
   }
 
+  const switchModalType = (type) => {
+    switch (type) {
+    case 'Sign Up':
+      return <SignUp modalType={openModal} handleClose={props.handleClose} setUser={props.setUser} alert={props.alert} />
+    case 'Sign In':
+      return <SignIn modalType={openModal} handleClose={props.handleClose} setUser={props.setUser} alert={props.alert} />
+    case 'Change Password':
+      return <ChangePassword handleClose={props.handleClose} alert={props.alert} user={props.user} />
+    default:
+    }
+  }
+
   const authenticatedOptions = (
     <Fragment>
-      <Nav.Link href="#change-password">Change Password</Nav.Link>
-      <Nav.Link href="#sign-out">Sign Out</Nav.Link>
+      <Button variant="primary" onClick={() => openModal('Change Password', true)}>Change Password</Button>
+      <Nav.Link className="btn btn-primary" href="#sign-out">Sign Out</Nav.Link>
     </Fragment>
   )
   // function takes in string typeName
@@ -27,18 +40,15 @@ const Header = (props) => {
     <Fragment>
       <Button variant="primary" onClick={() => openModal('Sign Up', true)}>Sign Up</Button>
       <Button variant="primary" onClick={() => openModal('Sign In', true)}>Sign In</Button>
-      <ModalTemplate title={modalType} show={props.show} handleClose={props.handleClose} handleShow={props.handleShow}>
-        { modalType === 'Sign Up'
-          ? <SignUp setUser={props.setUser} alert={props.alert} />
-          : <SignIn setUser={props.setUser} alert={props.alert} />
-        }
-      </ModalTemplate>
     </Fragment>
   )
 
   const alwaysOptions = (
     <Fragment>
-      <Nav.Link href="/#">Home</Nav.Link>
+      <Nav.Link href="/#" className="btn btn-primary">Home</Nav.Link>
+      <ModalTemplate title={modalType} show={props.show} handleClose={props.handleClose} handleShow={props.handleShow}>
+        {switchModalType(modalType)}
+      </ModalTemplate>
     </Fragment>
   )
 
