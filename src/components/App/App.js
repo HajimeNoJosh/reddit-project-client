@@ -1,10 +1,8 @@
 import React, { Component, Fragment } from 'react'
-import { Route } from 'react-router-dom'
 
 import AuthenticatedRoute from '../AuthenticatedRoute/AuthenticatedRoute'
 import AutoDismissAlert from '../AutoDismissAlert/AutoDismissAlert'
 import Header from '../Header/Header'
-import SignIn from '../SignIn/SignIn'
 import SignOut from '../SignOut/SignOut'
 import ChangePassword from '../ChangePassword/ChangePassword'
 
@@ -46,9 +44,6 @@ class App extends Component {
           />
         ))}
         <main className="container">
-          <Route path='/sign-in' render={() => (
-            <SignIn alert={this.alert} setUser={this.setUser} />
-          )} />
           <AuthenticatedRoute user={user} path='/sign-out' render={() => (
             <SignOut handleClose={this.handleClose} alert={this.alert} clearUser={this.clearUser} user={user} />
           )} />

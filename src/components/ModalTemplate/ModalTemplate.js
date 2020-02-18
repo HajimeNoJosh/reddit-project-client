@@ -1,13 +1,12 @@
 import { Modal, Button } from 'react-bootstrap'
 import React, { Fragment } from 'react'
 
-const ModalTemplate = ({ show, handleClose, handleShow, buttonName, children }) => {
+const ModalTemplate = ({ show, handleClose, handleShow, title, children }) => {
   return (
     <Fragment>
-      <Button variant="primary" onClick={handleShow}> {buttonName} </Button>
       <Modal show={show} onHide={handleClose} animation={false}>
         <Modal.Header closeButton>
-          <Modal.Title>{buttonName}</Modal.Title>
+          <Modal.Title>{title}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {children}
