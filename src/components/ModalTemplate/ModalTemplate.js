@@ -1,12 +1,14 @@
 import { Modal, Button } from 'react-bootstrap'
 import React, { Fragment } from 'react'
+import { withRouter } from 'react-router-dom'
 
-const ModalTemplate = ({ show, handleClose, handleShow, title, children }) => {
+const ModalTemplate = ({ show, handleClose, handleShow, title, children, match }, props) => {
+  const titleToUse = title || match.params.title
   return (
     <Fragment>
-      <Modal show={show} onHide={handleClose} animation={false}>
+      <Modal size="xl" show={show} onHide={handleClose} animation={false}>
         <Modal.Header closeButton>
-          <Modal.Title>{title}</Modal.Title>
+          <Modal.Title>{titleToUse}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {children}
@@ -21,4 +23,4 @@ const ModalTemplate = ({ show, handleClose, handleShow, title, children }) => {
   )
 }
 
-export default ModalTemplate
+export default withRouter(ModalTemplate)

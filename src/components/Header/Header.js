@@ -6,6 +6,7 @@ import SignUp from '../SignUp/SignUp'
 import SignIn from '../SignIn/SignIn'
 import { Button } from 'react-bootstrap'
 import ChangePassword from '../ChangePassword/ChangePassword'
+import Post from '../Body/Post'
 
 const Header = (props) => {
   const [modalType, setModalType] = useState(null)
@@ -24,6 +25,7 @@ const Header = (props) => {
     case 'Change Password':
       return <ChangePassword handleClose={props.handleClose} alert={props.alert} user={props.user} />
     default:
+      return <Post handleClose={props.handleClose} alert={props.alert} user={props.user} />
     }
   }
 
