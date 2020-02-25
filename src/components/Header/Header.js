@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useContext, useState } from 'react'
 import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar'
 import ModalTemplate from '../ModalTemplate/ModalTemplate'
@@ -7,9 +7,11 @@ import SignIn from '../SignIn/SignIn'
 import { Button } from 'react-bootstrap'
 import ChangePassword from '../ChangePassword/ChangePassword'
 import Post from '../Body/Post'
+import { SessionContext } from '../App/Session.js'
 
 const Header = (props) => {
   const [modalType, setModalType] = useState(null)
+  const session = useContext(SessionContext)
 
   const openModal = (type, handleShow) => {
     setModalType(type)
@@ -57,14 +59,14 @@ const Header = (props) => {
   return (
     <Navbar bg="primary" variant="dark" expand="md">
       <Navbar.Brand href="#">
-        HajimeNoReddit
+        Hajimedit
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="ml-auto">
-          { props.user && <span className="navbar-text mr-2">Welcome, {props.user.email}</span>}
+          { session.token && <span className="navbar-text mr-2">Welcome, {session.email}</span>}
           { alwaysOptions }
-          { props.user ? authenticatedOptions : unauthenticatedOptions }
+          { session.token ? authenticatedOptions : unauthenticatedOptions }
         </Nav>
       </Navbar.Collapse>
     </Navbar>
