@@ -49,7 +49,9 @@ const Header = (props) => {
 
   const alwaysOptions = (
     <Fragment>
-      <Nav.Link href="#" className="btn btn-primary">Home</Nav.Link>
+      <Navbar.Brand href="#">
+      Hajimedit
+      </Navbar.Brand>
       <ModalTemplate title={modalType} show={props.show} handleClose={props.handleClose} handleShow={props.handleShow}>
         {switchModalType(modalType)}
       </ModalTemplate>
@@ -58,14 +60,11 @@ const Header = (props) => {
 
   return (
     <Navbar bg="primary" variant="dark" expand="md">
-      <Navbar.Brand href="#">
-        Hajimedit
-      </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="ml-auto">
-          { session.token && <span className="navbar-text mr-2">Welcome, {session.email}</span>}
           { alwaysOptions }
+          { session.token && <span className="navbar-text mr-2">Welcome, {session.email}</span>}
           { session.token ? authenticatedOptions : unauthenticatedOptions }
         </Nav>
       </Navbar.Collapse>
