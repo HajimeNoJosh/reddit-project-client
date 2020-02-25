@@ -36,12 +36,6 @@ const CommentInputEdit = ({ user,
             >
               Edit
             </Button>
-            <Button
-              variant="danger"
-              onClick={handleCloseEdit}
-            >
-              Cancel
-            </Button>
           </Form>
         </div>
       </div>

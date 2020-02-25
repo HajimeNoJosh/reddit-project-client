@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Fragment } from 'react'
 import axios from 'axios'
 import apiUrl from '../../apiConfig'
 import { withRouter, Redirect } from 'react-router-dom'
 import CommentInput from './CommentInput'
 import Comments from './Comments'
+import ArrowsPost from './ArrowsPost'
 
 const Post = (props) => {
   const [post, setPost] = useState(null)
@@ -15,8 +16,7 @@ const Post = (props) => {
   const [commentId, setCommentId] = useState(null)
   // const [setCommentEdit] = useState()
   const [commentTextValueEdit, setCommentTextValueEdit] = useState()
-  const userId = props.user._id
-
+  const userId = props.user.id
   // Get request for post with id
 
   useEffect(() => {
@@ -33,6 +33,9 @@ const Post = (props) => {
       }))
       .then(res => setPost(res.data.post))
       .catch(() => props.alert({ heading: 'Nah...', message: 'That didn\'t work', variant: 'danger' }))
+    return () => {
+      setPost(null)
+    }
   }, [])
 
   // Get request for comments based off said post
@@ -52,6 +55,9 @@ const Post = (props) => {
       .then(res => setComments(res.data.comments))
       .then(setDeletedComment(false))
       .catch(() => props.alert({ heading: 'Nah...', message: 'That didn\'t work', variant: 'danger' }))
+    return () => {
+      setComment(null)
+    }
   }, [commentTextValueEdit, deletedComment])
 
   // Creating a comment
@@ -111,6 +117,12 @@ const Post = (props) => {
         message: `A comment with a text of ${commentTextValueEdit} has been edited`,
         variant: 'success'
       }))
+      .then(() => {
+        setShowEdit(false)
+        setCommentId(null)
+        setCommentTextValueEdit(null)
+      })
+
       .catch(console.error)
   }
 
@@ -118,12 +130,6 @@ const Post = (props) => {
     event.persist()
     // setCommentEdit(data => ({ ...data, [event.target.name]: event.target.value }))
     setCommentTextValueEdit(event.target.value)
-  }
-
-  const handleCloseEdit = (id) => {
-    setShowEdit(false)
-    setCommentId(null)
-    setCommentTextValueEdit(null)
   }
 
   const handleShowEdit = (id, textValue) => {
@@ -159,35 +165,42 @@ const Post = (props) => {
   }
 
   // Move delete and move edit to here and do similar to line 85
-
   return (
     <div>
+      <h1 className='center postsplayedtitle'>{post.title}</h1>
       <p className='center postsplayedtitle'>{post.text}</p>
-      <hr />
-      {userId === post.owner && <button className='btn btn-danger' onClick={() => props.destroy(props.match.params.id)}> Delete </button>}
-      <hr />
-      Post a comment
-      <CommentInput
-        commentTextValue={commentTextValue}
-        handleChange={handleChange}
-        handleSubmit={handleSubmit}
-        comments={comments}
-        alert={props.alert}
-        user={props.user} />
-      <hr />
-      <Comments
-        comments={comments}
-        handleChangeEdit={handleChangeEdit}
-        handleSubmitEdit={handleSubmitEdit}
-        alert={props.alert}
-        user={props.user}
-        handleShowEdit={handleShowEdit}
-        handleCloseEdit={handleCloseEdit}
-        showEdit={showEdit}
-        commentId={commentId}
-        userId={userId}
-        destroyComment={destroyComment}
-        commentTextValueEdit={commentTextValueEdit} />
+
+      <div>
+        <ArrowsPost user={props.user} alert={props.alert} id={props.match.params.id} />
+        <hr />
+        {userId === post.owner && <button className='btn btn-danger' onClick={() => props.destroy(props.match.params.id)}> Delete </button>}
+        <hr />
+        {post.owner &&
+          <Fragment>
+            <div>Post a comment</div>
+            <CommentInput
+              commentTextValue={commentTextValue}
+              handleChange={handleChange}
+              handleSubmit={handleSubmit}
+              comments={comments}
+              alert={props.alert}
+              user={props.user} />
+          </Fragment>}
+        <hr />
+  Comments
+        <Comments
+          comments={comments}
+          handleChangeEdit={handleChangeEdit}
+          handleSubmitEdit={handleSubmitEdit}
+          alert={props.alert}
+          user={props.user}
+          handleShowEdit={handleShowEdit}
+          showEdit={showEdit}
+          commentId={commentId}
+          userId={userId}
+          destroyComment={destroyComment}
+          commentTextValueEdit={commentTextValueEdit} />
+      </div>
     </div>
   )
 }

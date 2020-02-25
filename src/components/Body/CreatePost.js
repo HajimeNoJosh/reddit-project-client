@@ -21,8 +21,7 @@ const CreatePost = ({ user, alert, history }) => {
       data: {
         post: {
           text: post.text,
-          title: post.title,
-          upvote: 0
+          title: post.title
         } }
     })
       .then(alert({

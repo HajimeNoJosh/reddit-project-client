@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react'
 import axios from 'axios'
 import apiUrl from '../../apiConfig'
 import { useLocation, Link } from 'react-router-dom'
-import Arrows from './Arrows'
+import ArrowsPost from './ArrowsPost'
 
 const Posts = ({ user, alert, setDeleted, show, deleted, match, handleClose, handleShow }) => {
   const [post, setPost] = useState()
@@ -14,7 +14,9 @@ const Posts = ({ user, alert, setDeleted, show, deleted, match, handleClose, han
         'Content-Type': 'application/json'
       }
     })
-      .then(res => setPost(res.data.posts))
+      .then(res => {
+        setPost(res.data.posts)
+      })
       .then(setDeleted(false))
       .catch(console.error)
   }, [deleted])
@@ -30,7 +32,7 @@ const Posts = ({ user, alert, setDeleted, show, deleted, match, handleClose, han
         <Link to={ { pathname: `/comments/${post.id}/${post.title}`, state: { background: location } } } onClick={() => handleShow()}>
           <h1>{post.title}</h1>
         </Link>
-        <Arrows user={user} alert={alert} id={post.id} />
+        <ArrowsPost showPost={show} user={user} alert={alert} id={post.id} />
       </div>
     ))
   }

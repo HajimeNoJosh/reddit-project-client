@@ -21,9 +21,6 @@ const UnAuthPost = (props) => {
       }))
       .then(res => setPost(res.data.post))
       .catch(() => props.alert({ heading: 'Nah...', message: 'That didn\'t work', variant: 'danger' }))
-  }, [])
-
-  useEffect(() => {
     axios({
       url: `${apiUrl}/comments/?post=${props.match.params.id}`,
       method: 'GET'
@@ -36,17 +33,22 @@ const UnAuthPost = (props) => {
       }))
       .then(res => setComments(res.data.comments))
       .catch(() => props.alert({ heading: 'Nah...', message: 'That didn\'t work', variant: 'danger' }))
+    return () => {
+      setPost(null)
+      setComments(null)
+    }
   }, [])
 
   if (!post) {
     return <p>Loading...</p>
   }
-  // Clear input field on Submit
-  // Move delete and move edit to here and do similar to line 85
 
   return (
     <div>
+      <h1 className='center postsplayedtitle'>{post.title}</h1>
       <p className='center postsplayedtitle'>{post.text}</p>
+      <hr />
+      Comments
       <UnAuthComments comments={comments} alert={props.alert} />
     </div>
   )

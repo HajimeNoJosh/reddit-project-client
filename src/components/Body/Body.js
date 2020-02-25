@@ -1,11 +1,14 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useContext } from 'react'
 import Nav from 'react-bootstrap/Nav'
 import Posts from './Posts'
 import UnAuthPosts from './UnAuthPosts'
 import { withRouter } from 'react-router-dom'
+import { SessionContext } from '../App/Session.js'
 
-const Body = ({ user, setDeleted, alert, deleted, showPost, match, handleClose, showUnAuthPost, handleShowPost, handleShowUnAuthPost }) => {
-  if (!user) {
+const Body = ({ user, setDeleted, alert, deleted, history, showPost, match, handleClose, showUnAuthPost, handleShowPost, handleShowUnAuthPost }) => {
+  const session = useContext(SessionContext)
+
+  if (session.token === undefined) {
     return (
       <Fragment>
         <div>

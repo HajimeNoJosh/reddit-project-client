@@ -4,7 +4,7 @@ import apiUrl from '../../apiConfig'
 import { useLocation, Link } from 'react-router-dom'
 
 const UnAuthPosts = ({ alert, show, handleClose, handleShow }) => {
-  const [post, setPost] = useState()
+  const [post, setPost] = useState(null)
   useEffect(() => {
     axios({
       url: `${apiUrl}/posts/`,
@@ -15,14 +15,17 @@ const UnAuthPosts = ({ alert, show, handleClose, handleShow }) => {
     })
       .then(res => setPost(res.data.posts))
       .catch(console.error)
+    return () => {
+      setPost(null)
+    }
   }, [])
-  const location = useLocation()
+  const unAuthLocation = useLocation()
   let postJsx = ''
   if (!post) {
     postJsx = 'loading...'
   } else {
     postJsx = post.map(post => (
-      <Link to={ { pathname: `/comments/${post.id}/${post.title}`, state: { background: location } } } onClick={() => handleShow()} key={post.id} >
+      <Link to={ { pathname: `/comments/${post.id}/${post.title}`, state: { background: unAuthLocation } } } onClick={() => handleShow()} key={post.id} >
         <h1>{post.title}</h1>
       </Link>
     ))
