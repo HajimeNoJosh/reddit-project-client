@@ -49,7 +49,7 @@ const Header = (props) => {
 
   const alwaysOptions = (
     <Fragment>
-      <Nav.Link href="/#" className="btn btn-primary">Home</Nav.Link>
+      <Nav.Link href="#" className="btn btn-primary">Home</Nav.Link>
       <ModalTemplate title={modalType} show={props.show} handleClose={props.handleClose} handleShow={props.handleShow}>
         {switchModalType(modalType)}
       </ModalTemplate>
