@@ -163,44 +163,42 @@ const Post = (props) => {
   if (!post) {
     return <p>Loading...</p>
   }
-
   // Move delete and move edit to here and do similar to line 85
   return (
     <div>
       <h1 className='center postsplayedtitle'>{post.title}</h1>
       <p className='center postsplayedtitle'>{post.text}</p>
 
-      <div>
+      {props.user.id && <div>
         <ArrowsPost user={props.user} alert={props.alert} id={props.match.params.id} />
         <hr />
         {userId === post.owner && <button className='btn btn-danger' onClick={() => props.destroy(props.match.params.id)}> Delete </button>}
         <hr />
-        {post.owner &&
-          <Fragment>
-            <div>Post a comment</div>
-            <CommentInput
-              commentTextValue={commentTextValue}
-              handleChange={handleChange}
-              handleSubmit={handleSubmit}
-              comments={comments}
-              alert={props.alert}
-              user={props.user} />
-          </Fragment>}
+        <Fragment>
+          <div>Post a comment</div>
+          <CommentInput
+            commentTextValue={commentTextValue}
+            handleChange={handleChange}
+            handleSubmit={handleSubmit}
+            comments={comments}
+            alert={props.alert}
+            user={props.user} />
+        </Fragment>
         <hr />
+      </div>}
   Comments
-        <Comments
-          comments={comments}
-          handleChangeEdit={handleChangeEdit}
-          handleSubmitEdit={handleSubmitEdit}
-          alert={props.alert}
-          user={props.user}
-          handleShowEdit={handleShowEdit}
-          showEdit={showEdit}
-          commentId={commentId}
-          userId={userId}
-          destroyComment={destroyComment}
-          commentTextValueEdit={commentTextValueEdit} />
-      </div>
+      <Comments
+        comments={comments}
+        handleChangeEdit={handleChangeEdit}
+        handleSubmitEdit={handleSubmitEdit}
+        alert={props.alert}
+        user={props.user}
+        handleShowEdit={handleShowEdit}
+        showEdit={showEdit}
+        commentId={commentId}
+        userId={userId}
+        destroyComment={destroyComment}
+        commentTextValueEdit={commentTextValueEdit} />
     </div>
   )
 }

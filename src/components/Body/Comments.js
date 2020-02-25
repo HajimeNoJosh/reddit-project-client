@@ -11,7 +11,9 @@ const Comments = (props) => {
     commentJsx = props.comments.map(comment => {
       return (
         <div key={comment.id}>
-          <ArrowsComments user={props.user} alert={props.alert} id={comment.id} />
+          {props.user.id && <div>
+            <ArrowsComments user={props.user} alert={props.alert} id={comment.id} />
+          </div>}
           {props.commentId !== comment.id && <p>{comment.text}</p>}
           {props.userId === comment.owner && props.showEdit && props.commentId === comment.id && <CommentInputEdit
             handleCloseEdit={props.handleCloseEdit}

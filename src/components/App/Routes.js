@@ -88,7 +88,7 @@ const Routes = (props) => {
               <UnAuthPost alert={makeAlert} />
             </ModalTemplate>
           )} />}
-          {background && props.session && <AuthenticatedRoute user={props.session} exact path="/comments/:id/:title" render={() => (
+          {background && <AuthenticatedRoute user={props.session} exact path="/comments/:id/:title" render={() => (
             <ModalTemplate show={showPost} handleClose={handleClose} handleShow={handleShowPost}>
               <Post deleted={deleted} destroy={destroy} alert={makeAlert} user={props.session} />
             </ModalTemplate>
