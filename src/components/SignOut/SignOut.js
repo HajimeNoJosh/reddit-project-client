@@ -3,10 +3,11 @@ import { withRouter } from 'react-router-dom'
 
 import { signOut } from '../../api/auth'
 import messages from '../AutoDismissAlert/messages'
+import Cookies from 'js-cookie'
 
 class SignOut extends Component {
   componentDidMount () {
-    const { alert, clearUser, user, handleClose, history } = this.props
+    const { alert, user, handleClose, history } = this.props
 
     signOut(user)
       .finally(() => alert({
@@ -14,9 +15,9 @@ class SignOut extends Component {
         messagE: messages.signOutSuccess,
         variant: 'success'
       }))
+      .finally(() => Cookies.remove('session'))
       .finally(() => handleClose())
       .finally(() => history.push('/'))
-      .finally(() => clearUser())
   }
 
   render () {
