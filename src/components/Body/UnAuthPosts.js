@@ -2,6 +2,8 @@ import React, { Fragment, useState, useEffect } from 'react'
 import axios from 'axios'
 import apiUrl from '../../apiConfig'
 import { useLocation, Link } from 'react-router-dom'
+import ArrowsPost from './ArrowsPost'
+const moment = require('moment')
 
 const UnAuthPosts = ({ alert, show, handleClose, handleShow }) => {
   const [post, setPost] = useState(null)
@@ -19,15 +21,27 @@ const UnAuthPosts = ({ alert, show, handleClose, handleShow }) => {
       setPost(null)
     }
   }, [])
-  const unAuthLocation = useLocation()
+  const location = useLocation()
   let postJsx = ''
   if (!post) {
     postJsx = 'loading...'
   } else {
     postJsx = post.map(post => (
-      <Link to={ { pathname: `/comments/${post.id}/${post.title}`, state: { background: unAuthLocation } } } onClick={() => handleShow()} key={post.id} >
-        <h1>{post.title}</h1>
-      </Link>
+      <div className='postmain' key={post.id}>
+        <ArrowsPost showPost={show} alert={alert} id={post.id} />
+        <div className='posts'>
+          <div className='postedinfo'>
+          Posted by {post.email} {moment(post.createdAt).fromNow()}
+          </div>
+          <Link className='infoforpost' to={ { pathname: `/comments/${post.id}/${post.title}`, state: { background: location } } } onClick={() => handleShow()} >
+
+            <div className='posttitle'>{post.title}</div>
+            <div className='postinfo'>
+              {post.amount} comments
+            </div>
+          </Link>
+        </div>
+      </div>
     ))
   }
 

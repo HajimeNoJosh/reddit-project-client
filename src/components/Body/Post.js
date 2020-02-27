@@ -5,6 +5,7 @@ import { withRouter, Redirect } from 'react-router-dom'
 import CommentInput from './CommentInput'
 import Comments from './Comments'
 import ArrowsPost from './ArrowsPost'
+const moment = require('moment')
 
 const Post = (props) => {
   const [post, setPost] = useState(null)
@@ -62,7 +63,7 @@ const Post = (props) => {
 
   // Creating a comment
 
-  const handleSubmit = event => {
+  const handleSubmit = (event) => {
     event.preventDefault()
     axios({
       url: `${apiUrl}/comments`,
@@ -74,7 +75,8 @@ const Post = (props) => {
       data: {
         comment: {
           post_id: props.match.params.id,
-          text: comment.text
+          text: comment.text,
+          email: props.user.email
         }
       }
     })
@@ -166,16 +168,28 @@ const Post = (props) => {
   // Move delete and move edit to here and do similar to line 85
   return (
     <div>
-      <h1 className='center postsplayedtitle'>{post.title}</h1>
-      <p className='center postsplayedtitle'>{post.text}</p>
+      <div className='postmain' key={post.id}>
+        {props.user.id && <ArrowsPost showPost={props.show} user={props.user} alert={props.alert} id={post.id} />}
+        <div className='posts'>
+          <div className='postedinfo'>
+        Posted by {post.email} {moment(post.createdAt).fromNow()}
+          </div>
+          <div className='infoforpost'>
 
-      {props.user.id && <div>
-        <ArrowsPost user={props.user} alert={props.alert} id={props.match.params.id} />
-        <hr />
+            <div className='posttitle'>{post.title}</div>
+            <p>{post.text} </p>
+            <div>
+            </div>
+          </div>
+          <div className='postinfo'>
+            {post.amount} comments
+          </div>
+        </div>
         {userId === post.owner && <button className='btn btn-danger' onClick={() => props.destroy(props.match.params.id)}> Delete </button>}
-        <hr />
-        <Fragment>
-          <div>Post a comment</div>
+      </div>
+      <div>
+        {props.user.id && <Fragment>
+          <div className='comment'>Post a comment</div>
           <CommentInput
             commentTextValue={commentTextValue}
             handleChange={handleChange}
@@ -183,9 +197,8 @@ const Post = (props) => {
             comments={comments}
             alert={props.alert}
             user={props.user} />
-        </Fragment>
-        <hr />
-      </div>}
+        </Fragment>}
+      </div>
   Comments
       <Comments
         comments={comments}

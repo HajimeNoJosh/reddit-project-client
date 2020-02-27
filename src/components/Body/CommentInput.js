@@ -3,12 +3,12 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import { withRouter } from 'react-router-dom'
 
-const CommentInput = ({ user, handleSubmit, commentTextValue, handleChange, history, match }) => {
+const CommentInput = ({ user, handleSubmit, amount, commentTextValue, handleChange, history, match }) => {
   return (
     <Fragment>
       <div className="row">
         <div className="col-sm-10 col-md-8 mx-auto mt-5">
-          <Form onSubmit={handleSubmit}>
+          <Form onSubmit={() => handleSubmit(event, amount)}>
             <Form.Group controlId="text">
               <textarea
                 required

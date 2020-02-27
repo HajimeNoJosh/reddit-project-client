@@ -21,7 +21,9 @@ const CreatePost = ({ user, alert, history }) => {
       data: {
         post: {
           text: post.text,
-          title: post.title
+          title: post.title,
+          email: user.email,
+          amount: 0
         } }
     })
       .then(alert({
@@ -52,6 +54,7 @@ const CreatePost = ({ user, alert, history }) => {
                 type="title"
                 name="title"
                 placeholder="Title"
+                maxLength="50"
                 onChange={handleChange}
               />
             </Form.Group>

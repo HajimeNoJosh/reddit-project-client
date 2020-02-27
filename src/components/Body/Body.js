@@ -11,7 +11,7 @@ const Body = ({ user, setDeleted, alert, deleted, history, showPost, match, hand
   if (session.token === undefined) {
     return (
       <Fragment>
-        <div>
+        <div className='mainbody'>
           <UnAuthPosts show={showUnAuthPost} handleClose={handleClose} handleShow={handleShowUnAuthPost} />
         </div>
       </Fragment>
@@ -22,9 +22,7 @@ const Body = ({ user, setDeleted, alert, deleted, history, showPost, match, hand
         <div>
           <Nav.Link href="#/Create-Post" className="btn btn-primary">Create A Post</Nav.Link>
         </div>
-        <div>
-          <Posts alert={alert} deleted={deleted} setDeleted={setDeleted} show={showPost} handleClose={handleClose} handleShow={handleShowPost} user={user} />
-        </div>
+        <Posts alert={alert} deleted={deleted} setDeleted={setDeleted} show={showPost} handleClose={handleClose} handleShow={handleShowPost} user={user} />
       </Fragment>
     )
   }

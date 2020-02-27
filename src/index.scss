@@ -1,8 +1,187 @@
 @import '~bootstrap/scss/bootstrap';
+@import url('https://fonts.googleapis.com/css?family=Rubik&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
 .modal-backdrop {
   opacity: .5;
 }
 
 .modalBackground {
   background-color: black;
+}
+
+.header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #2F384E;
+}
+
+.hajimedit {
+font-family: Rubik;
+font-style: normal;
+font-weight: 1000;
+font-size: 36px;
+color: #FFFFFF;
+padding: 25px;
+}
+
+.rectangle{
+  height: 300px;
+  width: 200px;
+  background: #D8D8D8;
+  border: 1px solid #979797;
+  border-radius: 8px;
+}
+
+.mainbody {
+  display: flex;
+  justify-content: flex-start;
+    flex-direction: column;
+    margin: 25px 0;
+}
+
+.whitecolorbutton {
+font-family: Lato;
+font-style: normal;
+font-weight: bold;
+font-size: 18px;
+color: #FFFFFF;
+background-color: #2F384E;
+border: none;
+padding: 10px 30px;
+}
+.up:active {
+  background-color: #F89939;
+}
+
+.votebuttons {
+  border: none;
+  background-color: transparent;
+}
+
+
+
+.posts {
+  background: #FFFFFF;
+  border: 1px solid #CACACA;
+  border-radius: 0 4px 4px 0;
+  padding: 10px 20px;
+  border-left: none;
+  width: 700px;
+}
+
+.posttitle {
+  font-family: Rubik;
+font-style: normal;
+font-weight: 1000;
+font-size: 24px;
+line-height: 50px;
+ text-overflow: hidden;
+ overflow: hidden;
+color: #2E2E2E;
+}
+
+.voting {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #2F384E;
+  padding: 28px 13px;
+  border: 1px 0px solid #CACACA;
+  border-radius: 4px 0 0 4px;
+  color: white;
+}
+
+
+.downvote {
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+
+  border-top: 10px solid #477CFF;
+}
+
+.upvote {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+
+    border-bottom: 10px solid #F89939;
+}
+
+.voteup {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+
+    border-bottom: 10px solid white;
+}
+.comment {
+  display: flex;
+  justify-content: center;
+}
+
+.buttoninfo {
+  background-color: transparent;
+  border: none;
+}
+
+.votedown {
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+
+  border-top: 10px solid white;
+}
+
+.arrowrect {
+  background-color: #2F384E;
+}
+
+.postedinfo {
+  font-family: Lato;
+font-style: normal;
+font-weight: normal;
+font-size: 14px;
+line-height: 17px;
+/* identical to box height */
+
+
+color: #7D7D7D;
+}
+
+.postinfo{
+  font-family: Lato;
+font-style: normal;
+font-weight: bold;
+font-size: 14px;
+line-height: 17px;
+/* identical to box height */
+
+
+color: #7D7D7D;
+}
+
+.postmain {
+  display: flex;
+  justify-content: flex-start;
+    margin: 10px 0;
+    height: 100%;
+}
+
+
+.orangebutton {
+  font-family: Lato;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  background-color: #F89939;
+  border-radius: 4px;
+  border: none;
+  color: #FFFFFF;
+  padding: 10px 30px;
 }

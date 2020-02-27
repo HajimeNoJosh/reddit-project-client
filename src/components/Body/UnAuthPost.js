@@ -3,6 +3,8 @@ import axios from 'axios'
 import apiUrl from '../../apiConfig'
 import { withRouter } from 'react-router-dom'
 import UnAuthComments from './UnAuthComments'
+import ArrowsPost from './ArrowsPost'
+const moment = require('moment')
 
 const UnAuthPost = (props) => {
   const [post, setPost] = useState(null)
@@ -45,10 +47,24 @@ const UnAuthPost = (props) => {
 
   return (
     <div>
-      <h1 className='center postsplayedtitle'>{post.title}</h1>
-      <p className='center postsplayedtitle'>{post.text}</p>
-      <hr />
-      Comments
+      <div className='postmain' key={post.id}>
+        <ArrowsPost showPost={props.show} user={props.user} alert={props.alert} id={post.id} />
+        <div className='posts'>
+          <div className='postedinfo'>
+        Posted by {post.email} {moment(post.createdAt).fromNow()}
+          </div>
+          <div className='infoforpost'>
+            <div className='posttitle'>{post.title}</div>
+            <p>{post.text} </p>
+          </div>
+          <div className='postinfo'>
+            {post.amount} comments
+          </div>
+          <div>
+          </div>
+        </div>
+      </div>
+  Comments
       <UnAuthComments comments={comments} alert={props.alert} />
     </div>
   )

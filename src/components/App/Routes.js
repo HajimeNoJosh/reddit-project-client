@@ -68,7 +68,7 @@ const Routes = (props) => {
             message={alert.message}
           />
         ))}
-        <main className="container">
+        <main>
           <Switch location={background || location }>
             <Route user={props.session} path='/sign-out' render={() => (
               <SignOut handleClose={handleClose} alert={makeAlert} user={props.session} />

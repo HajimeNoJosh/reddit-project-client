@@ -1,10 +1,7 @@
 import React, { Fragment, useContext, useState } from 'react'
-import Nav from 'react-bootstrap/Nav'
-import Navbar from 'react-bootstrap/Navbar'
 import ModalTemplate from '../ModalTemplate/ModalTemplate'
 import SignUp from '../SignUp/SignUp'
 import SignIn from '../SignIn/SignIn'
-import { Button } from 'react-bootstrap'
 import ChangePassword from '../ChangePassword/ChangePassword'
 import Post from '../Body/Post'
 import { SessionContext } from '../App/Session.js'
@@ -32,26 +29,27 @@ const Header = (props) => {
   }
 
   const authenticatedOptions = (
-    <Fragment>
-      <Button variant="primary" onClick={() => openModal('Change Password', true)}>Change Password</Button>
-      <Nav.Link className="btn btn-primary" href="#sign-out">Sign Out</Nav.Link>
-    </Fragment>
+    <div className='unauth'>
+      { session.token && <span className="whitecolorbutton" >Welcome, {session.email}</span>}
+      <button className="whitecolorbutton" onClick={() => openModal('Change Password', true)}>Change Password</button>
+      <a className="orangebutton" href="#sign-out">Sign Out</a>
+    </div>
   )
   // function takes in string typeName
   // switch check what is type name === signUp return sign up etc...
   // always options have ModalTemplate with function inside that does this switch
   const unauthenticatedOptions = (
-    <Fragment>
-      <Button variant="primary" onClick={() => openModal('Sign Up', true)}>Sign Up</Button>
-      <Button variant="primary" onClick={() => openModal('Sign In', true)}>Sign In</Button>
-    </Fragment>
+    <div className='unauth'>
+      <button className='whitecolorbutton' onClick={() => openModal('Sign In', true)}>Sign In</button>
+      <button className='orangebutton' onClick={() => openModal('Sign Up', true)}>Sign Up</button>
+    </div>
   )
 
   const alwaysOptions = (
     <Fragment>
-      <Navbar.Brand href="#">
-      Hajimedit
-      </Navbar.Brand>
+      <a className='hajimedit' href="#">
+      hajimedit
+      </a>
       <ModalTemplate title={modalType} show={props.show} handleClose={props.handleClose} handleShow={props.handleShow}>
         {switchModalType(modalType)}
       </ModalTemplate>
@@ -59,16 +57,12 @@ const Header = (props) => {
   )
 
   return (
-    <Navbar bg="primary" variant="dark" expand="md">
-      <Navbar.Toggle aria-controls="basic-navbar-nav" />
-      <Navbar.Collapse id="basic-navbar-nav">
-        <Nav className="ml-auto">
-          { alwaysOptions }
-          { session.token && <span className="navbar-text mr-2">Welcome, {session.email}</span>}
-          { session.token ? authenticatedOptions : unauthenticatedOptions }
-        </Nav>
-      </Navbar.Collapse>
-    </Navbar>
+    <Fragment>
+      <header className='header'>
+        { alwaysOptions }
+        { session.token ? authenticatedOptions : unauthenticatedOptions }
+      </header>
+    </Fragment>
   )
 }
 
