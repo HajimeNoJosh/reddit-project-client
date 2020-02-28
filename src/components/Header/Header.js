@@ -48,7 +48,7 @@ const Header = (props) => {
   const alwaysOptions = (
     <Fragment>
       <a className='hajimedit' href="#">
-      hajimedit
+      hajimeddit
       </a>
       <ModalTemplate title={modalType} show={props.show} handleClose={props.handleClose} handleShow={props.handleShow}>
         {switchModalType(modalType)}

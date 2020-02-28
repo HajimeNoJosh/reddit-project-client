@@ -154,6 +154,15 @@ line-height: 17px;
 color: #7D7D7D;
 }
 
+.loading {
+  display: flex;
+  justify-content: center;
+  background-image: url('./components/Body/Loading.gif');
+  background-repeat: no-repeat;
+  height: 500px;
+  width: 500px;
+}
+
 .postinfo{
   font-family: Lato;
 font-style: normal;
