@@ -2,24 +2,17 @@ import React, { } from 'react'
 import { withRouter } from 'react-router-dom'
 import CommentInputEdit from './CommentInputEdit'
 import ArrowsComments from './ArrowsComments'
-import ImageLoader from 'react-load-image'
 const moment = require('moment')
 
 const Comments = (props) => {
-  function Preloader (props) {
-    return <img src="../Loading/Loading.gif" />
-  }
   let commentJsx = ''
   if (!props.comments) {
-    commentJsx = <ImageLoader src="../Loading/Loading.gif" >     <img />
-      <div>Error!</div>
-      <Preloader />
-    </ImageLoader>
+    commentJsx = 'loading...'
   } else {
     commentJsx = props.comments.map(comment => {
       return (
         <div className='postmain' key={comment.id}>
-          <ArrowsComments user={props.user} alert={props.alert} id={comment.id} />
+          <ArrowsComments upvoteUsers={comment.upvoteUsers} downvoteUsers={comment.downvoteUsers} user={props.user} alert={props.alert} id={comment.id} />
           <div className='posts'>
             <div className='postedinfo'>
               Posted by {comment.email} {moment(comment.createdAt).fromNow()}

@@ -21,23 +21,14 @@ const Post = (props) => {
   // Get request for post with id
 
   useEffect(() => {
-    axios({
-      url: `${apiUrl}/posts/${props.match.params.id}`,
-      method: 'GET',
-      headers: { 'Authorization': `Token token=${props.user.token}` }
-    })
-      .then(props.alert({
-        heading: 'You got a post',
-        message: 'This is a post',
-        variant: 'success'
-
-      }))
-      .then(res => setPost(res.data.post))
-      .catch(() => props.alert({ heading: 'Nah...', message: 'That didn\'t work', variant: 'danger' }))
-    return () => {
-      setPost(null)
+    if (props.posts) {
+      for (let i = 0; i < props.posts.length; i++) {
+        if (props.posts[i].id === props.match.params.id) {
+          setPost(props.posts[i])
+        }
+      }
     }
-  }, [])
+  })
 
   // Get request for comments based off said post
 
@@ -169,7 +160,7 @@ const Post = (props) => {
   return (
     <div>
       <div className='postmain' key={post.id}>
-        {props.user.id && <ArrowsPost showPost={props.show} user={props.user} alert={props.alert} id={post.id} />}
+        {props.user.id && <ArrowsPost setVoted={props.setVoted} setPostVote={props.setPostVote} upvoteUsers={post.upvoteUsers} downvoteUsers={post.downvoteUsers} showPost={props.show} user={props.user} alert={props.alert} id={post.id} />}
         <div className='posts'>
           <div className='postedinfo'>
         Posted by {post.email} {moment(post.createdAt).fromNow()}

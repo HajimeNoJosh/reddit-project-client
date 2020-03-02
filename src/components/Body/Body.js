@@ -5,7 +5,21 @@ import UnAuthPosts from './UnAuthPosts'
 import { withRouter } from 'react-router-dom'
 import { SessionContext } from '../App/Session.js'
 
-const Body = ({ user, setDeleted, alert, deleted, history, showPost, match, handleClose, showUnAuthPost, handleShowPost, handleShowUnAuthPost }) => {
+const Body = ({ user,
+  background,
+  setDeleted,
+  alert,
+  deleted,
+  history,
+  showPost,
+  match,
+  handleClose,
+  showUnAuthPost,
+  handleShowPost,
+  handleShowUnAuthPost,
+  setPostVote,
+  posts
+}) => {
   const session = useContext(SessionContext)
 
   if (session.token === undefined) {
@@ -22,7 +36,17 @@ const Body = ({ user, setDeleted, alert, deleted, history, showPost, match, hand
         <div>
           <Nav.Link href="#/Create-Post" className="btn btn-primary">Create A Post</Nav.Link>
         </div>
-        <Posts alert={alert} deleted={deleted} setDeleted={setDeleted} show={showPost} handleClose={handleClose} handleShow={handleShowPost} user={user} />
+        <Posts
+          background={background}
+          alert={alert}
+          posts={posts}
+          setPostVote={setPostVote}
+          deleted={deleted}
+          setDeleted={setDeleted}
+          show={showPost}
+          handleClose={handleClose}
+          handleShow={handleShowPost}
+          user={user} />
       </Fragment>
     )
   }

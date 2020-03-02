@@ -47,7 +47,7 @@ const Header = (props) => {
 
   const alwaysOptions = (
     <Fragment>
-      <a className='hajimedit' href="#">
+      <a className='hajimedit' href="#" onClick={() => props.setHome(true)}>
       hajimeddit
       </a>
       <ModalTemplate title={modalType} show={props.show} handleClose={props.handleClose} handleShow={props.handleShow}>

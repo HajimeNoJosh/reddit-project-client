@@ -5,12 +5,13 @@ import Button from 'react-bootstrap/Button'
 import apiUrl from '../../apiConfig'
 import { withRouter } from 'react-router-dom'
 
-const CreatePost = ({ user, alert, history }) => {
+const CreatePost = ({ user, alert, history, setCreate }) => {
   const [post, setPost] = useState()
   // const [created, setCreated] = useState()
 
   const handleSubmit = event => {
     event.preventDefault()
+    setCreate(true)
     axios({
       url: `${apiUrl}/posts`,
       method: 'POST',
@@ -23,14 +24,15 @@ const CreatePost = ({ user, alert, history }) => {
           text: post.text,
           title: post.title,
           email: user.email,
-          amount: 0
+          amount: 0,
+          upvoteUsers: [user.id],
+          downvoteUsers: []
         } }
     })
       .then(alert({
         heading: 'You added an post',
         message: `A post with a title of ${post.title} has been added`,
         variant: 'success'
-
       }))
       .then(response => {
         history.push(`/comments/${response.data.post.id}/${response.data.post.title}`)

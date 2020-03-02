@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react'
+import React, { useState, Fragment, useEffect } from 'react'
 import { SessionContext } from './Session.js'
 import AuthenticatedRoute from '../AuthenticatedRoute/AuthenticatedRoute'
 import AutoDismissAlert from '../AutoDismissAlert/AutoDismissAlert'
@@ -18,6 +18,9 @@ const Routes = (props) => {
   const [showPost, setShowPost] = useState(false)
   const [showUnAuthPost, setShowUnAuthPost] = useState(false)
   const [deleted, setDeleted] = useState(false)
+  const [posts, setPosts] = useState()
+  const [home, setHome] = useState(false)
+  const [create, setCreate] = useState(false)
   const history = useHistory()
   const [alerts, setAlerts] = useState([])
 
@@ -28,13 +31,62 @@ const Routes = (props) => {
     setShow(false)
     setShowPost(false)
     setShowUnAuthPost(false)
-    background && history.goBack()
+    background && history.push({
+      pathname: background.pathname,
+      state: {
+        voteType: 1
+      }
+    })
   }
 
   const handleShow = () => setShow(true)
 
   const handleShowPost = () => setShowPost(true)
   const handleShowUnAuthPost = () => setShowUnAuthPost(true)
+
+  // set post vote from modal (post id, type) {
+  // update posts => find post by post id & upvote/downvote depending on type
+  // }
+
+  const setPostVote = (postid, type) => {
+    for (let i = 0; i < posts.length; i++) {
+      if (posts[i].id === postid) {
+        if (type === 'destroy upvote') {
+          posts[i].upvoteUsers.splice(posts[i].upvoteUsers.findIndex(x => x === props.session.id), 1)
+        } else if (type === 'add upvote') {
+          posts[i].upvoteUsers.push(props.session.id)
+        } else if (type === 'add upvote destroy downvote') {
+          posts[i].upvoteUsers.push(props.session.id)
+          posts[i].downvoteUsers.splice(posts[i].downvoteUsers.findIndex(x => x === props.session.id), 1)
+        } else if (type === 'destroy downvote') {
+          posts[i].downvoteUsers.splice(posts[i].downvoteUsers.findIndex(x => x === props.session.id), 1)
+        } else if (type === 'add downvote destroy upvote') {
+          posts[i].downvoteUsers.push(props.session.id)
+          posts[i].upvoteUsers.splice(posts[i].upvoteUsers.findIndex(x => x === props.session.id), 1)
+        } else if (type === 'add downvote') {
+          posts[i].downvoteUsers.push(props.session.id)
+        }
+      }
+    }
+    setPosts(posts)
+  }
+
+  useEffect(() => {
+    axios({
+      url: `${apiUrl}/posts/`,
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => {
+        setPosts(res.data.posts)
+      })
+      .then(setDeleted(false))
+      .then(setHome(false))
+      .then(setCreate(false))
+      .catch(console.error)
+  }, [deleted, home, create])
 
   // Delete request for said post
 
@@ -59,7 +111,7 @@ const Routes = (props) => {
   return (
     <SessionContext.Provider value={props.session}>
       <Fragment>
-        <Header user={props.session} alert={makeAlert} show={show} handleClose={handleClose} handleShow={handleShow} />
+        <Header setHome={setHome} user={props.session} alert={makeAlert} show={show} handleClose={handleClose} handleShow={handleShow} />
         {alerts.map((alert, index) => (
           <AutoDismissAlert
             key={index}
@@ -74,23 +126,48 @@ const Routes = (props) => {
               <SignOut handleClose={handleClose} alert={makeAlert} user={props.session} />
             )} />
             <Route user={props.session} exact path='/' render={() => (
-              <Body alert={makeAlert} setDeleted={setDeleted} deleted={deleted} showPost={showPost} showUnAuthPost={showUnAuthPost} handleClose={handleClose} handleShowUnAuthPost={handleShowUnAuthPost} handleShowPost={handleShowPost} user={props.session} />
+              <Body
+                background={background}
+                alert={makeAlert}
+                setDeleted={setDeleted}
+                setPostVote={setPostVote}
+                posts={posts}
+                deleted={deleted}
+                showPost={showPost}
+                showUnAuthPost={showUnAuthPost}
+                handleClose={handleClose}
+                handleShowUnAuthPost={handleShowUnAuthPost}
+                handleShowPost={handleShowPost}
+                user={props.session} />
             )} />
             <AuthenticatedRoute user={props.session} path='/Create-Post' render={() => (
-              <CreatePost alert={makeAlert} history={history} user={props.session} />
+              <CreatePost setCreate={setCreate} alert={makeAlert} history={history} user={props.session} />
             )} />
-            {props.session && <AuthenticatedRoute user={props.session} exact path='/comments/:id/:title' render={() => (
-              <Post deleted={deleted} destroy={destroy} alert={makeAlert} user={props.session} />
+            {props.session && posts && <AuthenticatedRoute user={props.session} exact path='/comments/:id/:title' render={() => (
+              <Post
+                deleted={deleted}
+                destroy={destroy}
+                alert={makeAlert}
+                user={props.session}
+                posts={posts}
+                setPostVote={setPostVote} />
             )} />}
           </Switch>
           {background && <Route exact path="/comments/:id/:title" render={() => (
             <ModalTemplate show={showUnAuthPost} handleClose={handleClose} handleShow={handleShowUnAuthPost}>
-              <UnAuthPost alert={makeAlert} />
+              <UnAuthPost posts={posts} alert={makeAlert} />
             </ModalTemplate>
           )} />}
           {background && <AuthenticatedRoute user={props.session} exact path="/comments/:id/:title" render={() => (
             <ModalTemplate show={showPost} handleClose={handleClose} handleShow={handleShowPost}>
-              <Post deleted={deleted} destroy={destroy} alert={makeAlert} user={props.session} />
+              <Post
+                show={showPost}
+                setPostVote={setPostVote}
+                deleted={deleted}
+                destroy={destroy}
+                alert={makeAlert}
+                posts={posts}
+                user={props.session} />
             </ModalTemplate>
           )} />}
         </main>

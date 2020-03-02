@@ -28,7 +28,7 @@ const UnAuthPosts = ({ alert, show, handleClose, handleShow }) => {
   } else {
     postJsx = post.map(post => (
       <div className='postmain' key={post.id}>
-        <ArrowsPost showPost={show} alert={alert} id={post.id} />
+        <ArrowsPost upvoteUsers={post.upvoteUsers} downvoteUsers={post.downvoteUsers} showPost={show} alert={alert} id={post.id} />
         <div className='posts'>
           <div className='postedinfo'>
           Posted by {post.email} {moment(post.createdAt).fromNow()}

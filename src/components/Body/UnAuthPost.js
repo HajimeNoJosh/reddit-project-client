@@ -48,7 +48,7 @@ const UnAuthPost = (props) => {
   return (
     <div>
       <div className='postmain' key={post.id}>
-        <ArrowsPost showPost={props.show} user={props.user} alert={props.alert} id={post.id} />
+        <ArrowsPost upvoteUsers={post.upvoteUsers} downvoteUsers={post.downvoteUsers} showPost={props.show} user={props.user} alert={props.alert} id={post.id} />
         <div className='posts'>
           <div className='postedinfo'>
         Posted by {post.email} {moment(post.createdAt).fromNow()}
