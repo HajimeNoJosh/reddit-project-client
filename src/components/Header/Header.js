@@ -15,7 +15,7 @@ const Header = (props) => {
         </button>
         <div className="dropdown-content">
           <button className="whitecolorbutton" onClick={() => props.openModal('Change Password', true)}>Change Password</button>
-          <button className="whitecolorbutton" onClick={() => props.history.push('sign-out')}>Sign Out</button>
+          <button className="whitecolorbutton" onClick={() => props.history.push('/sign-out')}>Sign Out</button>
         </div>
       </div>
     </div>
