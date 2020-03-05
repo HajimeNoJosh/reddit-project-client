@@ -1,6 +1,6 @@
 # Hajimeddit
 
-![Website](https://i.imgur.com/uLKGwmn.jpg)
+![Website](https://i.imgur.com/bnT4g4u.jpg)
 
 [Website](https://hajimenojosh.github.io/reddit-project-client)
 
