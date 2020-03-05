@@ -111,8 +111,15 @@ const Routes = (props) => {
       .catch(console.error)
   }, [deleted, home, create])
 
-  const setCommentAmount = (num) => {
-    setAmount(num)
+  const setCommentAmount = (postid, type) => {
+    for (let i = 0; i < posts.length; i++) {
+      if (type === 'add comment' && posts[i].id === postid) {
+        posts[i].amount += 1
+      } else if (type === 'delete comment' && posts[i].id === postid) {
+        posts[i].amount -= 1
+      }
+    }
+    setPosts(posts)
   }
   // Delete request for said post
 
@@ -191,6 +198,7 @@ const Routes = (props) => {
                 user={props.session}
                 posts={posts}
                 amount={amount}
+                postbody={'post-body'}
                 setCommentAmount={setCommentAmount}
                 setPostVote={setPostVote}
                 setAmount={setAmount} />
@@ -211,6 +219,7 @@ const Routes = (props) => {
                 alert={makeAlert}
                 posts={posts}
                 amount={amount}
+                postbody={'post-modal-body'}
                 setCommentAmount={setCommentAmount}
                 showotherinfo={true}
                 user={props.session} />

@@ -269,8 +269,10 @@ height: 500px;
     padding-left: 10px;
     padding-right: 10px;
     border-left: none;
-    width: 700px;
+    max-width: 387px;
     flex-grow: 1;
+    overflow: scroll;
+
 }
 
 .comment {
@@ -300,11 +302,23 @@ height: 500px;
 
 .commentinput {
   padding-left: 71px;
-padding-right: 71px;
+  padding-right: 71px;
 }
 
 .post-body {
   padding: 10px;
+}
+
+.post-modal-body {
+  border: none;
+  margin-left: 100px;
+}
+
+@media(max-width: 991px) {
+  .post-modal-body {
+    max-width: 479px;
+    margin-left: 0;
+  }
 }
 
 .votenumber {

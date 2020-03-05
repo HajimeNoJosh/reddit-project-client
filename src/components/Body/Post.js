@@ -40,9 +40,7 @@ const Post = (props) => {
       headers: { 'Authorization': `Token token=${props.user.token}` }
     })
       .then(res => {
-        console.log(res)
         setComments(res.data.comments)
-        props.setCommentAmount(res.data.comments.length)
       })
       .then(setDeletedComment(false))
   }, [commentTextValueEdit, deletedComment])
@@ -74,7 +72,7 @@ const Post = (props) => {
       }))
       .then(res => {
         setComments([...comments, res.data.comment])
-        props.setCommentAmount(props.amount + 1)
+        props.setCommentAmount(props.match.params.id, 'add comment')
       })
       .then(setCommentTextValue(''))
       .catch(console.error)
@@ -142,6 +140,8 @@ const Post = (props) => {
 
       }))
       .then(setDeletedComment(true))
+      .then(props.setCommentAmount(props.match.params.id, 'delete comment'))
+
       .catch(() => props.alert({ heading: 'Nah...', message: 'That didn\'t work', variant: 'danger' }))
   }
 
@@ -157,7 +157,7 @@ const Post = (props) => {
   // Move delete and move edit to here and do similar to line 85
   return (
     <div className='mainbody'>
-      <div className='sign-up-body post-body'>
+      <div className={'sign-up-body ' + props.postbody}>
         <div className='postmain singlePost' key={post.id}>
           {props.user.id && <ArrowsPost setVoted={props.setVoted} setPostVote={props.setPostVote} upvoteUsers={post.upvoteUsers} downvoteUsers={post.downvoteUsers} showPost={props.show} user={props.user} alert={props.alert} id={post.id} />}
           {!props.user.id && <ArrowsPost setVoted={props.setVoted} setPostVote={props.setPostVote} upvoteUsers={post.upvoteUsers} downvoteUsers={post.downvoteUsers} showPost={props.show} user={props.user} alert={props.alert} id={post.id} />}
@@ -172,7 +172,7 @@ const Post = (props) => {
               </div>
             </div>
             <div className='postinfo'>
-              {props.amount} comments {userId === post.owner && <a className="about-link" onClick={() => props.destroy(props.match.params.id)}> Delete </a>}
+              {post.amount} comments {userId === post.owner && <a className="about-link" onClick={() => props.destroy(props.match.params.id)}> Delete </a>}
             </div>
           </div>
         </div>

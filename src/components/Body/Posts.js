@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react'
+import React, { Fragment } from 'react'
 import { useLocation, Link } from 'react-router-dom'
 import ArrowsPost from './ArrowsPost'
 const moment = require('moment')
@@ -15,7 +15,6 @@ const Posts = ({ user,
   handleShow,
   posts,
   setPostVote,
-  amount,
   setCommentAmount
 }) => {
   const location = useLocation()
@@ -25,9 +24,6 @@ const Posts = ({ user,
     postJsx = 'loading...'
   } else {
     postJsx = posts.map(post => {
-      useEffect(() => {
-        setCommentAmount(post.amount)
-      }, [])
       return (
         <div className='postmain' key={post.id}>
           <ArrowsPost setPostVote={setPostVote} upvoteUsers={post.upvoteUsers} downvoteUsers={post.downvoteUsers} showPost={show} user={user} alert={alert} id={post.id} />
@@ -42,7 +38,7 @@ const Posts = ({ user,
             <Link className='infoforpost' to={ { pathname: `/comments/${post.id}/${post.title}`, state: { background: location } } } onClick={() => handleShow()} >
 
               <div className='postinfo'>
-                {amount} comments
+                {post.amount} comments
               </div>
             </Link>
           </div>
