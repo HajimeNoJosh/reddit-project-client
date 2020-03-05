@@ -10,6 +10,9 @@ import Post from '../Body/Post'
 import UnAuthPost from '../Body/UnAuthPost'
 import { Route, useLocation, useHistory, Switch, withRouter } from 'react-router-dom'
 import ModalTemplate from '../ModalTemplate/ModalTemplate'
+import SignUp from '../SignUp/SignUp'
+import SignIn from '../SignIn/SignIn'
+import ChangePassword from '../ChangePassword/ChangePassword'
 import axios from 'axios'
 import apiUrl from '../../apiConfig'
 
@@ -18,11 +21,13 @@ const Routes = (props) => {
   const [showPost, setShowPost] = useState(false)
   const [showUnAuthPost, setShowUnAuthPost] = useState(false)
   const [deleted, setDeleted] = useState(false)
+  const [amount, setAmount] = useState()
   const [posts, setPosts] = useState()
   const [home, setHome] = useState(false)
   const [create, setCreate] = useState(false)
   const history = useHistory()
   const [alerts, setAlerts] = useState([])
+  const [modalType, setModalType] = useState(null)
 
   const makeAlert = ({ heading, message, variant }) => {
     setAlerts([...alerts, { heading, message, variant }])
@@ -43,6 +48,24 @@ const Routes = (props) => {
 
   const handleShowPost = () => setShowPost(true)
   const handleShowUnAuthPost = () => setShowUnAuthPost(true)
+
+  const openModal = (type, handleShow) => {
+    setModalType(type)
+    handleShow && setShow(true)
+  }
+
+  const switchModalType = (type) => {
+    switch (type) {
+    case 'Sign Up':
+      return <SignUp modalType={openModal} handleClose={handleClose} setUser={props.setUser} alert={makeAlert} />
+    case 'Sign In':
+      return <SignIn modalType={openModal} handleClose={handleClose} setUser={props.setUser} alert={makeAlert} />
+    case 'Change Password':
+      return <ChangePassword handleClose={handleClose} alert={makeAlert} user={props.user} />
+    default:
+      return <Post handleClose={handleClose} alert={makeAlert} user={props.user} />
+    }
+  }
 
   // set post vote from modal (post id, type) {
   // update posts => find post by post id & upvote/downvote depending on type
@@ -88,6 +111,9 @@ const Routes = (props) => {
       .catch(console.error)
   }, [deleted, home, create])
 
+  const setCommentAmount = (num) => {
+    setAmount(num)
+  }
   // Delete request for said post
 
   const destroy = (id) => {
@@ -111,7 +137,14 @@ const Routes = (props) => {
   return (
     <SessionContext.Provider value={props.session}>
       <Fragment>
-        <Header setHome={setHome} user={props.session} alert={makeAlert} show={show} handleClose={handleClose} handleShow={handleShow} />
+        <Header
+          switchModalType={switchModalType}
+          setHome={setHome} user={props.session}
+          alert={makeAlert} show={show}
+          handleClose={handleClose}
+          handleShow={handleShow}
+          modalType={modalType}
+          openModal={openModal} />
         {alerts.map((alert, index) => (
           <AutoDismissAlert
             key={index}
@@ -127,6 +160,7 @@ const Routes = (props) => {
             )} />
             <Route user={props.session} exact path='/' render={() => (
               <Body
+                openModal={openModal}
                 background={background}
                 alert={makeAlert}
                 setDeleted={setDeleted}
@@ -138,7 +172,13 @@ const Routes = (props) => {
                 handleClose={handleClose}
                 handleShowUnAuthPost={handleShowUnAuthPost}
                 handleShowPost={handleShowPost}
-                user={props.session} />
+                show={show}
+                handleShow={handleShow}
+                setCommentAmount={setCommentAmount}
+                amount={amount}
+                user={props.session}
+                switchModalType={switchModalType}
+                modalType={modalType} />
             )} />
             <AuthenticatedRoute user={props.session} path='/Create-Post' render={() => (
               <CreatePost setCreate={setCreate} alert={makeAlert} history={history} user={props.session} />
@@ -150,7 +190,10 @@ const Routes = (props) => {
                 alert={makeAlert}
                 user={props.session}
                 posts={posts}
-                setPostVote={setPostVote} />
+                amount={amount}
+                setCommentAmount={setCommentAmount}
+                setPostVote={setPostVote}
+                setAmount={setAmount} />
             )} />}
           </Switch>
           {background && <Route exact path="/comments/:id/:title" render={() => (
@@ -167,6 +210,9 @@ const Routes = (props) => {
                 destroy={destroy}
                 alert={makeAlert}
                 posts={posts}
+                amount={amount}
+                setCommentAmount={setCommentAmount}
+                showotherinfo={true}
                 user={props.session} />
             </ModalTemplate>
           )} />}

@@ -5,7 +5,6 @@ import { changePassword } from '../../api/auth'
 import messages from '../AutoDismissAlert/messages'
 
 import Form from 'react-bootstrap/Form'
-import Button from 'react-bootstrap/Button'
 
 class ChangePassword extends Component {
   constructor () {
@@ -49,8 +48,9 @@ class ChangePassword extends Component {
     const { oldPassword, newPassword } = this.state
 
     return (
-      <div className="row">
-        <div className="col-sm-10 col-md-8 mx-auto mt-5">
+      <div className='mainsignin'>
+        <div className='sidebarchangepassword'>
+          <h3> Change Password </h3>
           <Form onSubmit={this.onChangePassword}>
             <Form.Group controlId="oldPassword">
               <Form.Label>Old password</Form.Label>
@@ -74,13 +74,19 @@ class ChangePassword extends Component {
                 onChange={this.handleChange}
               />
             </Form.Group>
-            <Button
-              variant="primary"
-              type="submit"
+            <button
+              className='button-small'
             >
               Submit
-            </Button>
+            </button>
           </Form>
+        </div>
+        <div className="sidebarmain">
+          <div className='signinsidebarfirst'>
+            <div className='infoforfirst'>
+              <h2 className="title">Let me fetch a new password for you!</h2>
+            </div>
+          </div>
         </div>
       </div>
     )

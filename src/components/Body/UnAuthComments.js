@@ -10,9 +10,9 @@ const UnAuthComments = (props) => {
   } else {
     commentJsx = props.comments.map(comment => {
       return (
-        <div className='postmain' key={comment.id}>
+        <div className='postmaincomment' key={comment.id}>
           <ArrowsComments upvoteUsers={comment.upvoteUsers} downvoteUsers={comment.downvoteUsers} alert={props.alert} id={comment.id} />
-          <div className='posts'>
+          <div className='comments'>
             <div className='postedinfo'>
               Posted by {comment.email} {moment(comment.createdAt).fromNow()}
             </div>

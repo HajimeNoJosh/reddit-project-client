@@ -11,13 +11,13 @@ const Comments = (props) => {
   } else {
     commentJsx = props.comments.map(comment => {
       return (
-        <div className='postmain' key={comment.id}>
+        <div className='postmaincomment' key={comment.id}>
           <ArrowsComments upvoteUsers={comment.upvoteUsers} downvoteUsers={comment.downvoteUsers} user={props.user} alert={props.alert} id={comment.id} />
-          <div className='posts'>
+          <div className='comments'>
             <div className='postedinfo'>
               Posted by {comment.email} {moment(comment.createdAt).fromNow()}
             </div>
-            <div className='posttitle'> {props.commentId !== comment.id && <p>{comment.text}</p>}</div>
+            <div className='posttitle'> {props.commentId !== comment.id && <p className='commenttext'>{comment.text}</p>}</div>
             <div className='postinfo'>
               {props.userId === comment.owner && props.showEdit && props.commentId === comment.id && <CommentInputEdit
                 handleCloseEdit={props.handleCloseEdit}

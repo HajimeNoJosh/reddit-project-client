@@ -31,12 +31,12 @@ const ArrowsComment = ({ user, background, setCommentVote, upvoteUsers, downvote
 
   if (!user || Object.entries(user).length === 0) {
     return (
-      <div className='voting'>
+      <div className='votingcomment singlePost'>
         <div className='arrowrect' />
         <button className='votebuttons' disabled>
           <div className="voteup"></div>
         </button>
-        {votes}
+        <div className='commentvotes'>{votes}</div>
         <button className='votebuttons' disabled>
           <div className="votedown"></div>
         </button>
@@ -107,12 +107,12 @@ const ArrowsComment = ({ user, background, setCommentVote, upvoteUsers, downvote
     }
 
     return (
-      <div className='voting'>
+      <div className='votingcomment singlePost'>
         <div className='arrowrect' />
         <button className='votebuttons' onClick={() => pushedIncrement()}>
           <div className={upvote}></div>
         </button>
-        <div>{votes}</div>
+        <div className='commentvotes'>{votes}</div>
         <button className='votebuttons' onClick={() => pushedDecrement()}>
           <div className={downvote}></div>
         </button>

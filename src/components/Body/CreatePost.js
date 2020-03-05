@@ -1,9 +1,9 @@
 import React, { Fragment, useState } from 'react'
 import Form from 'react-bootstrap/Form'
 import axios from 'axios'
-import Button from 'react-bootstrap/Button'
 import apiUrl from '../../apiConfig'
 import { withRouter } from 'react-router-dom'
+import SideBar from './SideBar'
 
 const CreatePost = ({ user, alert, history, setCreate }) => {
   const [post, setPost] = useState()
@@ -47,9 +47,10 @@ const CreatePost = ({ user, alert, history, setCreate }) => {
 
   return (
     <Fragment>
-      <div className="row">
-        <div className="col-sm-10 col-md-8 mx-auto mt-5">
+      <div className='mainbody'>
+        <div className='sign-up-body create-post-body'>
           <Form onSubmit={handleSubmit}>
+            <h3>Create a Post</h3>
             <Form.Group controlId="title">
               <Form.Control
                 required
@@ -71,13 +72,13 @@ const CreatePost = ({ user, alert, history, setCreate }) => {
                 onChange={handleChange}
               />
             </Form.Group>
-            <Button
-              variant="primary"
-              type="submit"
-            >
+            <button className="button-medium button-small">
               Create
-            </Button>
+            </button>
           </Form>
+        </div>
+        <div className="sidebarmain2">
+          <SideBar />
         </div>
       </div>
     </Fragment>

@@ -46,26 +46,27 @@ const UnAuthPost = (props) => {
   }
 
   return (
-    <div>
-      <div className='postmain' key={post.id}>
-        <ArrowsPost upvoteUsers={post.upvoteUsers} downvoteUsers={post.downvoteUsers} showPost={props.show} user={props.user} alert={props.alert} id={post.id} />
-        <div className='posts'>
-          <div className='postedinfo'>
-        Posted by {post.email} {moment(post.createdAt).fromNow()}
-          </div>
-          <div className='infoforpost'>
-            <div className='posttitle'>{post.title}</div>
-            <p>{post.text} </p>
-          </div>
-          <div className='postinfo'>
-            {post.amount} comments
-          </div>
-          <div>
+    <div className='mainbody'>
+      <div className='sign-up-body post-body'>
+        <div className='postmain singlePost' key={post.id}>
+          <ArrowsPost upvoteUsers={post.upvoteUsers} downvoteUsers={post.downvoteUsers} showPost={props.show} user={props.user} alert={props.alert} id={post.id} />
+          <div className='posts'>
+            <div className='postedinfo'>
+          Posted by {post.email} {moment(post.createdAt).fromNow()}
+            </div>
+            <div className='infoforpost'>
+              <div className='posttitle'>{post.title}</div>
+              <p>{post.text} </p>
+            </div>
+            <div className='postinfo'>
+              {post.amount} comments
+            </div>
+            <div>
+            </div>
           </div>
         </div>
+        <UnAuthComments comments={comments} alert={props.alert} />
       </div>
-  Comments
-      <UnAuthComments comments={comments} alert={props.alert} />
     </div>
   )
 }

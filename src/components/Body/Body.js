@@ -1,9 +1,10 @@
 import React, { Fragment, useContext } from 'react'
-import Nav from 'react-bootstrap/Nav'
 import Posts from './Posts'
 import UnAuthPosts from './UnAuthPosts'
+import SideBar from './SideBar'
 import { withRouter } from 'react-router-dom'
 import { SessionContext } from '../App/Session.js'
+import ModalTemplate from '../ModalTemplate/ModalTemplate'
 
 const Body = ({ user,
   background,
@@ -18,7 +19,14 @@ const Body = ({ user,
   handleShowPost,
   handleShowUnAuthPost,
   setPostVote,
-  posts
+  posts,
+  amount,
+  show,
+  handleShow,
+  setCommentAmount,
+  switchModalType,
+  modalType,
+  openModal
 }) => {
   const session = useContext(SessionContext)
 
@@ -26,27 +34,38 @@ const Body = ({ user,
     return (
       <Fragment>
         <div className='mainbody'>
-          <UnAuthPosts show={showUnAuthPost} handleClose={handleClose} handleShow={handleShowUnAuthPost} />
+          <div className='posts-body'>
+            <UnAuthPosts show={showUnAuthPost} handleClose={handleClose} handleShow={handleShowUnAuthPost} />
+          </div>
+          <ModalTemplate title={modalType} show={show} handleClose={handleClose} handleShow={handleShow}>
+            {switchModalType(modalType)}
+          </ModalTemplate>
+          <SideBar show={true} title='This is Gohan' gohan='Gohan is a good boy' gohan2='Gohan likes new members' howtoplease='Brighten his day by joining us' button={<button onClick={() => openModal('Sign Up', true)} className="button-medium button-small">join</button>} />
         </div>
+
       </Fragment>
     )
   } else {
     return (
       <Fragment>
-        <div>
-          <Nav.Link href="#/Create-Post" className="btn btn-primary">Create A Post</Nav.Link>
+        <div className='mainbody'>
+          <div className='posts-body'>
+            <Posts
+              background={background}
+              alert={alert}
+              posts={posts}
+              setPostVote={setPostVote}
+              deleted={deleted}
+              setDeleted={setDeleted}
+              show={showPost}
+              handleClose={handleClose}
+              handleShow={handleShowPost}
+              user={user}
+              amount={amount}
+              setCommentAmount={setCommentAmount} />
+          </div>
+          <SideBar show={true} title='Gohan is happy to see you' button={<button className="button-medium button-small">Give Gohan a treat</button>}/>
         </div>
-        <Posts
-          background={background}
-          alert={alert}
-          posts={posts}
-          setPostVote={setPostVote}
-          deleted={deleted}
-          setDeleted={setDeleted}
-          show={showPost}
-          handleClose={handleClose}
-          handleShow={handleShowPost}
-          user={user} />
       </Fragment>
     )
   }

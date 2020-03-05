@@ -5,16 +5,17 @@ import { withRouter, Redirect } from 'react-router-dom'
 import CommentInput from './CommentInput'
 import Comments from './Comments'
 import ArrowsPost from './ArrowsPost'
+import SideBar from './SideBar'
 const moment = require('moment')
 
 const Post = (props) => {
   const [post, setPost] = useState(null)
   const [deletedComment, setDeletedComment] = useState(false)
-  const [comments, setComments] = useState(null)
   const [comment, setComment] = useState()
   const [commentTextValue, setCommentTextValue] = useState('')
   const [showEdit, setShowEdit] = useState(false)
   const [commentId, setCommentId] = useState(null)
+  const [comments, setComments] = useState(null)
   // const [setCommentEdit] = useState()
   const [commentTextValueEdit, setCommentTextValueEdit] = useState()
   const userId = props.user.id
@@ -38,18 +39,12 @@ const Post = (props) => {
       method: 'GET',
       headers: { 'Authorization': `Token token=${props.user.token}` }
     })
-      .then(props.alert({
-        heading: 'You got a comment',
-        message: 'This is a comment',
-        variant: 'success'
-
-      }))
-      .then(res => setComments(res.data.comments))
+      .then(res => {
+        console.log(res)
+        setComments(res.data.comments)
+        props.setCommentAmount(res.data.comments.length)
+      })
       .then(setDeletedComment(false))
-      .catch(() => props.alert({ heading: 'Nah...', message: 'That didn\'t work', variant: 'danger' }))
-    return () => {
-      setComment(null)
-    }
   }, [commentTextValueEdit, deletedComment])
 
   // Creating a comment
@@ -77,7 +72,10 @@ const Post = (props) => {
         variant: 'success'
 
       }))
-      .then(res => setComments([...comments, res.data.comment]))
+      .then(res => {
+        setComments([...comments, res.data.comment])
+        props.setCommentAmount(props.amount + 1)
+      })
       .then(setCommentTextValue(''))
       .catch(console.error)
   }
@@ -158,51 +156,56 @@ const Post = (props) => {
   }
   // Move delete and move edit to here and do similar to line 85
   return (
-    <div>
-      <div className='postmain' key={post.id}>
-        {props.user.id && <ArrowsPost setVoted={props.setVoted} setPostVote={props.setPostVote} upvoteUsers={post.upvoteUsers} downvoteUsers={post.downvoteUsers} showPost={props.show} user={props.user} alert={props.alert} id={post.id} />}
-        <div className='posts'>
-          <div className='postedinfo'>
-        Posted by {post.email} {moment(post.createdAt).fromNow()}
-          </div>
-          <div className='infoforpost'>
-
-            <div className='posttitle'>{post.title}</div>
-            <p>{post.text} </p>
-            <div>
+    <div className='mainbody'>
+      <div className='sign-up-body post-body'>
+        <div className='postmain singlePost' key={post.id}>
+          {props.user.id && <ArrowsPost setVoted={props.setVoted} setPostVote={props.setPostVote} upvoteUsers={post.upvoteUsers} downvoteUsers={post.downvoteUsers} showPost={props.show} user={props.user} alert={props.alert} id={post.id} />}
+          {!props.user.id && <ArrowsPost setVoted={props.setVoted} setPostVote={props.setPostVote} upvoteUsers={post.upvoteUsers} downvoteUsers={post.downvoteUsers} showPost={props.show} user={props.user} alert={props.alert} id={post.id} />}
+          <div className='posts'>
+            <div className='postedinfo'>
+          Posted by {post.email} {moment(post.createdAt).fromNow()}
+            </div>
+            <div className='infoforpost'>
+              <div className='posttitle'>{post.title}</div>
+              <p>{post.text} </p>
+              <div>
+              </div>
+            </div>
+            <div className='postinfo'>
+              {props.amount} comments {userId === post.owner && <a className="about-link" onClick={() => props.destroy(props.match.params.id)}> Delete </a>}
             </div>
           </div>
-          <div className='postinfo'>
-            {post.amount} comments
-          </div>
         </div>
-        {userId === post.owner && <button className='btn btn-danger' onClick={() => props.destroy(props.match.params.id)}> Delete </button>}
-      </div>
-      <div>
-        {props.user.id && <Fragment>
-          <div className='comment'>Post a comment</div>
-          <CommentInput
-            commentTextValue={commentTextValue}
-            handleChange={handleChange}
-            handleSubmit={handleSubmit}
+        <div className='commentinput'>
+          {props.user.id && <Fragment>
+            <CommentInput
+              commentTextValue={commentTextValue}
+              handleChange={handleChange}
+              handleSubmit={handleSubmit}
+              comments={comments}
+              alert={props.alert}
+              user={props.user}
+              email={post.email} />
+          </Fragment>}
+        </div>
+        <div className='comment'>
+          <Comments
             comments={comments}
+            handleChangeEdit={handleChangeEdit}
+            handleSubmitEdit={handleSubmitEdit}
             alert={props.alert}
-            user={props.user} />
-        </Fragment>}
+            user={props.user}
+            handleShowEdit={handleShowEdit}
+            showEdit={showEdit}
+            commentId={commentId}
+            userId={userId}
+            destroyComment={destroyComment}
+            commentTextValueEdit={commentTextValueEdit} />
+        </div>
       </div>
-  Comments
-      <Comments
-        comments={comments}
-        handleChangeEdit={handleChangeEdit}
-        handleSubmitEdit={handleSubmitEdit}
-        alert={props.alert}
-        user={props.user}
-        handleShowEdit={handleShowEdit}
-        showEdit={showEdit}
-        commentId={commentId}
-        userId={userId}
-        destroyComment={destroyComment}
-        commentTextValueEdit={commentTextValueEdit} />
+      <div className="sidebarmain2">
+        <SideBar showotherinfo={props.showotherinfo} />
+      </div>
     </div>
   )
 }

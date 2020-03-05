@@ -5,7 +5,6 @@ import { signUp, signIn } from '../../api/auth'
 import messages from '../AutoDismissAlert/messages'
 
 import Form from 'react-bootstrap/Form'
-import Button from 'react-bootstrap/Button'
 import { setSessionCookie } from '../App/Session.js'
 
 class SignUp extends Component {
@@ -55,8 +54,17 @@ class SignUp extends Component {
     const { email, password, passwordConfirmation } = this.state
 
     return (
-      <div className="row">
-        <div className="col-sm-10 col-md-8 mx-auto mt-5">
+      <div className='mainsignup'>
+        <div >
+          <div className='signupsidebarfirst'>
+            <div className='infoforfirst'>
+              <h2 className="titlelogin">Come on in!</h2>
+              <h2 className='titlelogin'>We have dog treats to share </h2>
+            </div>
+          </div>
+        </div>
+        <div className='sidebarsignup'>
+          <h3> Sign Up </h3>
           <Form onSubmit={this.onSignUp}>
             <Form.Group controlId="email">
               <Form.Label>Email address</Form.Label>
@@ -91,13 +99,12 @@ class SignUp extends Component {
                 onChange={this.handleChange}
               />
             </Form.Group>
-            <Button
-              variant="primary"
-              type="submit"
+            <button
+              className='button-small'
             >
               Submit
-            </Button>
-            <div>Have an account already? <a onClick={() => this.props.modalType('Sign In')} >Click here</a></div>
+            </button>
+            <div>Have an account already? <a className='about-link' onClick={() => this.props.modalType('Sign In')} >Sign In now!</a></div>
           </Form>
         </div>
       </div>

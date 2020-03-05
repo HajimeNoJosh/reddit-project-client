@@ -34,7 +34,7 @@ const ArrowsPost = ({ user, background, setVoted, setPostVote, upvoteUsers, down
         <button className='votebuttons' disabled>
           <div className="voteup"></div>
         </button>
-        {votes}
+        <div className='votenumber'> {votes}</div>
         <button className='votebuttons' disabled>
           <div className="votedown"></div>
         </button>
@@ -115,7 +115,7 @@ const ArrowsPost = ({ user, background, setVoted, setPostVote, upvoteUsers, down
         <button className='votebuttons' onClick={() => pushedIncrement()}>
           <div className={upvote}></div>
         </button>
-        <div>{votes}</div>
+        <div className='votenumber'>{votes}</div>
         <button className='votebuttons' onClick={() => pushedDecrement()}>
           <div className={downvote}></div>
         </button>

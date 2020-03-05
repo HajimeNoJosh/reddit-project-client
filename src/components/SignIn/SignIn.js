@@ -5,7 +5,6 @@ import { signIn } from '../../api/auth'
 import messages from '../AutoDismissAlert/messages'
 
 import Form from 'react-bootstrap/Form'
-import Button from 'react-bootstrap/Button'
 import { setSessionCookie } from '../App/Session.js'
 
 class SignIn extends Component {
@@ -51,22 +50,21 @@ class SignIn extends Component {
     const { email, password } = this.state
 
     return (
-      <div className="row">
-        <div className="col-sm-10 col-md-8 mx-auto mt-5">
+      <div className='mainsignin'>
+        <div className='sidebarsignin'>
+          <h3> Log in </h3>
           <Form onSubmit={this.onSignIn}>
             <Form.Group controlId="email">
-              <Form.Label>Email address</Form.Label>
               <Form.Control
                 required
                 type="text"
                 name="email"
                 value={email}
-                placeholder="Enter email"
+                placeholder="Enter Username"
                 onChange={this.handleChange}
               />
             </Form.Group>
             <Form.Group controlId="password">
-              <Form.Label>Password</Form.Label>
               <Form.Control
                 required
                 name="password"
@@ -76,14 +74,20 @@ class SignIn extends Component {
                 onChange={this.handleChange}
               />
             </Form.Group>
-            <Button
-              variant="primary"
-              type="submit"
+            <button
+              className='button-small'
             >
               Submit
-            </Button>
-            <div>Don&apos;t have an account yet? <a onClick={() => this.props.modalType('Sign Up')} >Click here</a></div>
+            </button>
+            <div>Don&apos;t have an account yet? <a className='about-link' onClick={() => this.props.modalType('Sign Up')} >Sign up now!</a></div>
           </Form>
+        </div>
+        <div className="sidebarmain">
+          <div className='signinsidebarfirst'>
+            <div className='infoforfirst'>
+              <h2 className="title">Bark! Bark!</h2>
+            </div>
+          </div>
         </div>
       </div>
     )
