@@ -16,7 +16,7 @@ const UnAuthComments = (props) => {
             <div className='postedinfo'>
               Posted by {comment.email} {moment(comment.createdAt).fromNow()}
             </div>
-            <div className='posttitle'> {props.commentId !== comment.id && <p>{comment.text}</p>}</div>
+            <div className='posttitle'> {props.commentId !== comment.id && <p className='commenttext'>{comment.text}</p>}</div>
             <div className='postinfo'>
               {props.userId === comment.owner && props.commentId !== comment.id && <button className='buttoninfo' onClick={() => props.handleShowEdit(comment.id, comment.text)}> Edit </button>}
               {props.userId === comment.owner && !props.showEdit && <button className='buttoninfo' onClick={() => props.destroyComment(comment.id, props.amount)}> Delete </button>}
