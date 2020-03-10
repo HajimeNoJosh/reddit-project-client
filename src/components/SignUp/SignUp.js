@@ -56,7 +56,7 @@ class SignUp extends Component {
     return (
       <div className='mainsignup'>
         <div >
-          <div className='signupsidebarfirst'>
+          <div className='sidebarfirst'>
             <div className='infoforfirst'>
               <h2 className="titlelogin">Come on in!</h2>
               <h2 className='titlelogin'>We have dog treats to share </h2>

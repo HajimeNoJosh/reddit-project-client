@@ -80,7 +80,7 @@ class ChangePassword extends Component {
           </Form>
         </div>
         <div className="sidebarmain">
-          <div className='signinsidebarfirst'>
+          <div className='sidebarfirst'>
             <div className='infoforfirst'>
               <h2 className="title">Let me fetch a new password for you!</h2>
             </div>

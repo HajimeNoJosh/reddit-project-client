@@ -77,9 +77,7 @@ const CreatePost = ({ user, alert, history, setCreate }) => {
             </button>
           </Form>
         </div>
-        <div className="sidebarmain2">
-          <SideBar />
-        </div>
+        <SideBar />
       </div>
     </Fragment>
   )

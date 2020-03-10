@@ -2,21 +2,26 @@ import React from 'react'
 import Gohan from './Gohan'
 import Gohan2 from './Gohan2'
 const Sidebar = (props) => {
+  console.log(props.showTreat)
   return (
     <div className="sidebarmain">
-      {props.show && <div className='sidebarfirst'>
+      {props.show && <div className='sidebarfirst gradiantbg'>
         <div className="logo">
-          {props.showTreat && <Gohan aria-label='gohan' />}
-          {!props.showTreat && <Gohan2 aria-label='gohan' />}
+          {!props.showTreat && <Gohan aria-label='gohan2' />}
+          {props.showTreat && <Gohan2 aria-label='gohan' />}
         </div>
         <div className='infoforfirst'>
           <h2 className="title">{props.title}</h2>
-          <p>{props.gohan} <br/> {props.gohan2}</p>
-          <p>{props.howtoplease}</p>
+          {props.gohan && <p>
+            {props.gohan}
+            {props.gohan2 && <br />}
+            {props.gohan2}
+          </p>}
+          {props.howtoplease && <p>{props.howtoplease}</p>}
           {!props.showTreat && <div>{props.button}</div>}
         </div>
       </div>}
-      {!props.showotherinfo && <div className="sidebarsecond">
+      {!props.showotherinfo && <div className="sidebarinfo">
         <div className="secondtitle">
           <h3>About the Community</h3>
         </div>
@@ -28,7 +33,7 @@ const Sidebar = (props) => {
         </div>
       </div>}
 
-      {!props.showotherinfo && <div className="sidebarsecond">
+      {!props.showotherinfo && <div className="sidebarinfo">
         <div className="secondtitle">
           <h3>Hajimeddit Rules</h3>
         </div>

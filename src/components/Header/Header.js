@@ -34,7 +34,7 @@ const Header = (props) => {
     <Fragment>
       <a className='hajimedit' href="#" onClick={() => props.setHome(true)}>
         <Gohan aria-label='gohan' />
-      hajimeddit
+      Hajimeddit
       </a>
       <ModalTemplate title={props.modalType} show={props.show} handleClose={props.handleClose} handleShow={props.handleShow}>
         {props.switchModalType(props.modalType)}

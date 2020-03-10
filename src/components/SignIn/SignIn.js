@@ -83,7 +83,7 @@ class SignIn extends Component {
           </Form>
         </div>
         <div className="sidebarmain">
-          <div className='signinsidebarfirst'>
+          <div className='sidebarfirst'>
             <div className='infoforfirst'>
               <h2 className="title">Bark! Bark!</h2>
             </div>
