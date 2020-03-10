@@ -110,11 +110,11 @@ const ArrowsComment = ({ user, background, setCommentVote, upvoteUsers, downvote
       <div className='votingcomment singlePost'>
         <div className='arrowrect' />
         <button className='votebuttons' onClick={() => pushedIncrement()}>
-          <div className={upvote}></div>
+          <div className={upvote + ' upvoteButton'}></div>
         </button>
         <div className='commentvotes'>{votes}</div>
         <button className='votebuttons' onClick={() => pushedDecrement()}>
-          <div className={downvote}></div>
+          <div className={downvote + ' downvoteButton'}></div>
         </button>
       </div>
     )

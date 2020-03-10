@@ -34,9 +34,6 @@ const Posts = ({ user,
             <Link className='infoforpost' to={ { pathname: `/comments/${post.id}/${post.title}`, state: { background: location } } } onClick={() => handleShow()} >
 
               <div className='posttitle'>{post.title}</div>
-            </Link>
-            <Link className='infoforpost' to={ { pathname: `/comments/${post.id}/${post.title}`, state: { background: location } } } onClick={() => handleShow()} >
-
               <div className='postinfo'>
                 {post.amount} comments
               </div>

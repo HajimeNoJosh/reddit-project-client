@@ -6,7 +6,7 @@ const CommentInput = ({ user, handleSubmit, amount, email, commentTextValue, han
   return (
     <Fragment>
 
-      <div className='comment'>Post a comment as {email}</div>
+      <div className='comment'>Post a comment as {user.email}</div>
       <Form onSubmit={() => handleSubmit(event, amount)}>
         <Form.Group controlId="text">
           <textarea

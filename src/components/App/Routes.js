@@ -6,7 +6,8 @@ import Header from '../Header/Header'
 import Body from '../Body/Body'
 import SignOut from '../SignOut/SignOut'
 import CreatePost from '../Body/CreatePost'
-import Post from '../Body/Post'
+import PostOnePage from '../Body/PostOnePage'
+import PostModal from '../Body/PostModal'
 import UnAuthPost from '../Body/UnAuthPost'
 import { Route, useLocation, useHistory, Switch, withRouter } from 'react-router-dom'
 import ModalTemplate from '../ModalTemplate/ModalTemplate'
@@ -63,7 +64,7 @@ const Routes = (props) => {
     case 'Change Password':
       return <ChangePassword handleClose={handleClose} alert={makeAlert} user={props.user} />
     default:
-      return <Post handleClose={handleClose} alert={makeAlert} user={props.user} />
+      return <PostOnePage handleClose={handleClose} alert={makeAlert} user={props.user} />
     }
   }
 
@@ -191,7 +192,7 @@ const Routes = (props) => {
               <CreatePost setCreate={setCreate} alert={makeAlert} history={history} user={props.session} />
             )} />
             {props.session && posts && <AuthenticatedRoute user={props.session} exact path='/comments/:id/:title' render={() => (
-              <Post
+              <PostOnePage
                 deleted={deleted}
                 destroy={destroy}
                 alert={makeAlert}
@@ -211,7 +212,7 @@ const Routes = (props) => {
           )} />}
           {background && <AuthenticatedRoute user={props.session} exact path="/comments/:id/:title" render={() => (
             <ModalTemplate show={showPost} handleClose={handleClose} handleShow={handleShowPost}>
-              <Post
+              <PostModal
                 show={showPost}
                 setPostVote={setPostVote}
                 deleted={deleted}

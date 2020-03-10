@@ -6,8 +6,8 @@ const Sidebar = (props) => {
     <div className="sidebarmain">
       {props.show && <div className='sidebarfirst'>
         <div className="logo">
-          {props.showTreat && <Gohan aria-label='gohan' />}
-          {!props.showTreat && <Gohan2 aria-label='gohan' />}
+          {!props.showTreat && <Gohan aria-label='gohan' />}
+          {props.showTreat && <Gohan2 aria-label='gohan' />}
         </div>
         <div className='infoforfirst'>
           <h2 className="title">{props.title}</h2>

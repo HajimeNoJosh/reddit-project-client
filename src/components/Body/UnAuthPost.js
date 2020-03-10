@@ -15,26 +15,12 @@ const UnAuthPost = (props) => {
       url: `${apiUrl}/posts/${props.match.params.id}`,
       method: 'GET'
     })
-      .then(props.alert({
-        heading: 'You got a post',
-        message: 'This is a post',
-        variant: 'success'
-
-      }))
       .then(res => setPost(res.data.post))
-      .catch(() => props.alert({ heading: 'Nah...', message: 'That didn\'t work', variant: 'danger' }))
     axios({
       url: `${apiUrl}/comments/?post=${props.match.params.id}`,
       method: 'GET'
     })
-      .then(props.alert({
-        heading: 'You got a comment',
-        message: 'This is a comment',
-        variant: 'success'
-
-      }))
       .then(res => setComments(res.data.comments))
-      .catch(() => props.alert({ heading: 'Nah...', message: 'That didn\'t work', variant: 'danger' }))
     return () => {
       setPost(null)
       setComments(null)
@@ -47,7 +33,7 @@ const UnAuthPost = (props) => {
 
   return (
     <div className='mainbody'>
-      <div className='sign-up-body post-body'>
+      <div className='sign-up-body post-body post-modal-body'>
         <div className='postmain singlePost' key={post.id}>
           <ArrowsPost upvoteUsers={post.upvoteUsers} downvoteUsers={post.downvoteUsers} showPost={props.show} user={props.user} alert={props.alert} id={post.id} />
           <div className='posts'>

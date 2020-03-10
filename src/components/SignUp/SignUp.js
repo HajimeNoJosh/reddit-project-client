@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 
 import { signUp, signIn } from '../../api/auth'
-import messages from '../AutoDismissAlert/messages'
 
 import Form from 'react-bootstrap/Form'
 import { setSessionCookie } from '../App/Session.js'
@@ -26,28 +25,12 @@ class SignUp extends Component {
     event.preventDefault()
     console.log(this.props)
 
-    const { alert } = this.props
-
     signUp(this.state)
       .then(() => signIn(this.state))
       .then(res => {
         setSessionCookie({ token: res.data.user.token, id: res.data.user._id, email: res.data.user.email })
       })
-      .then(() => alert({
-        heading: 'Sign Up Success',
-        message: messages.signUpSuccess,
-        variant: 'success'
-      }))
       .then(() => this.props.handleClose())
-      .catch(error => {
-        console.error(error)
-        this.setState({ email: '', password: '', passwordConfirmation: '' })
-        alert({
-          heading: 'Sign Up Failed',
-          message: messages.signUpFailure,
-          variant: 'danger'
-        })
-      })
   }
 
   render () {

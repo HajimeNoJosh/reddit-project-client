@@ -11,7 +11,7 @@ const Header = (props) => {
     <div className='unauth'>
       <button className='orangebutton' onClick={() => props.history.push('/create-post')}>Create Post </button>
       <div className="dropdown">
-        <button className="dropbtn votebuttons">{ session.token && <span className="whitecolorbutton" >Welcome, {session.email}</span> }
+        <button className="dropbtn votebuttons">{ session.token && <span className="whitecolorbutton nohover" >Welcome, {session.email}</span> }
         </button>
         <div className="dropdown-content">
           <button className="whitecolorbutton" onClick={() => props.openModal('Change Password', true)}>Change Password</button>

@@ -29,15 +29,9 @@ const CreatePost = ({ user, alert, history, setCreate }) => {
           downvoteUsers: []
         } }
     })
-      .then(alert({
-        heading: 'You added an post',
-        message: `A post with a title of ${post.title} has been added`,
-        variant: 'success'
-      }))
       .then(response => {
         history.push(`/comments/${response.data.post.id}/${response.data.post.title}`)
       })
-      .catch(console.error)
   }
 
   const handleChange = event => {

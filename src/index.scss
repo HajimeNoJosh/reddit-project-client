@@ -30,6 +30,10 @@ font-size: 36px;
 color: #FFFFFF;
 }
 
+.hajimedit:hover{
+  color: #FFFFFF;
+}
+
 .rectangle{
   height: 300px;
   width: 200px;
@@ -39,7 +43,6 @@ color: #FFFFFF;
 }
 
 .sidebarmain {
-  flex-basis: 10rem;
   padding: 0px 0 0 15px;
 }
 
@@ -150,6 +153,16 @@ width: 100%;
 }
 .up:active {
   background-color: #F89939;
+
+
+}
+
+.whitecolorbutton:hover {
+  background-color: #3e5c7a;
+}
+
+.nohover:hover {
+  background-color: #2F384E;
 }
 
 .secondtitle{
@@ -182,6 +195,7 @@ ol {
   color: black;
   border: none;
   font-weight: bold;
+  cursor: pointer;
 }
 
 .modal {
@@ -269,9 +283,10 @@ height: 500px;
     padding-left: 10px;
     padding-right: 10px;
     border-left: none;
-    max-width: 387px;
+        max-width: 608px;
     flex-grow: 1;
     overflow: scroll;
+    word-break: break-all;
 
 }
 
@@ -288,16 +303,13 @@ height: 500px;
 }
 .sign-up-body {
   flex: 1;
-      border: 1px solid #CACACA;
-      border-radius: 4px;
-      padding: 60px;
-      margin-left: 30px;
-      margin-top: 15px;
-      max-width: 600px;
+  border: 1px solid #CACACA;
+  border-radius: 4px;
 }
 
 .create-post-body {
   height: 500px;
+  padding: 15px;
 }
 
 .commentinput {
@@ -311,7 +323,6 @@ height: 500px;
 
 .post-modal-body {
   border: none;
-  margin-left: 100px;
 }
 
 @media(max-width: 991px) {
@@ -401,15 +412,17 @@ color: #2E2E2E;
       border-bottom: 10px solid black;
     }
 }
-.comment {
 
+.comment {
   justify-content: center;
 }
 
 .buttoninfo {
   background-color: transparent;
   border: none;
+  padding-bottom: 27px;
 }
+
 
 .votedown {
   width: 0;
@@ -493,7 +506,6 @@ padding-right: 71px;
   border-radius: 4px;
   border: none;
   color: #FFFFFF;
-  padding: 10px 30px;
   width: 185px;
 }
 

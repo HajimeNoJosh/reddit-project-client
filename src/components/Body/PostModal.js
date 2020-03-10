@@ -5,7 +5,6 @@ import { withRouter, Redirect } from 'react-router-dom'
 import CommentInput from './CommentInput'
 import Comments from './Comments'
 import ArrowsPost from './ArrowsPost'
-import SideBar from './SideBar'
 const moment = require('moment')
 
 const Post = (props) => {
@@ -64,18 +63,11 @@ const Post = (props) => {
         }
       }
     })
-      .then(props.alert({
-        heading: 'You added an comment',
-        message: `A comment with a text of ${comment.text} has been added`,
-        variant: 'success'
-
-      }))
       .then(res => {
         setComments([...comments, res.data.comment])
         props.setCommentAmount(props.match.params.id, 'add comment')
       })
       .then(setCommentTextValue(''))
-      .catch(console.error)
   }
 
   // Changing the input field for creating a comment
@@ -101,18 +93,11 @@ const Post = (props) => {
         }
       }
     })
-      .then(props.alert({
-        heading: 'You edited an comment',
-        message: `A comment with a text of ${commentTextValueEdit} has been edited`,
-        variant: 'success'
-      }))
       .then(() => {
         setShowEdit(false)
         setCommentId(null)
         setCommentTextValueEdit(null)
       })
-
-      .catch(console.error)
   }
 
   const handleChangeEdit = event => {
@@ -133,16 +118,8 @@ const Post = (props) => {
       method: 'DELETE',
       headers: { 'Authorization': `Token token=${props.user.token}` }
     })
-      .then(props.alert({
-        heading: 'You deleted a comment',
-        message: 'This comment was deleted',
-        variant: 'success'
-
-      }))
       .then(setDeletedComment(true))
       .then(props.setCommentAmount(props.match.params.id, 'delete comment'))
-
-      .catch(() => props.alert({ heading: 'Nah...', message: 'That didn\'t work', variant: 'danger' }))
   }
 
   if (props.deleted) {
@@ -202,9 +179,6 @@ const Post = (props) => {
             destroyComment={destroyComment}
             commentTextValueEdit={commentTextValueEdit} />
         </div>
-      </div>
-      <div className="sidebarmain2">
-        <SideBar showotherinfo={props.showotherinfo} />
       </div>
     </div>
   )
