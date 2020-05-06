@@ -1,5 +1,5 @@
 import React, { Fragment, useContext } from 'react'
-import ModalTemplate from '../ModalTemplate/ModalTemplate'
+// import ModalTemplate from '../ModalTemplate/ModalTemplate'
 import { SessionContext } from '../App/Session.js'
 import Gohan from '../Body/Gohan'
 import { withRouter } from 'react-router-dom'
@@ -36,9 +36,7 @@ const Header = (props) => {
         <Gohan aria-label='gohan' />
       hajimeddit
       </a>
-      <ModalTemplate title={props.modalType} show={props.show} handleClose={props.handleClose} handleShow={props.handleShow}>
-        {props.switchModalType(props.modalType)}
-      </ModalTemplate>
+
     </Fragment>
   )
 

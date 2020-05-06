@@ -15,7 +15,10 @@ class SignOut extends Component {
         messagE: messages.signOutSuccess,
         variant: 'success'
       }))
-      .finally(() => Cookies.remove('session'))
+      .finally(() => {
+        this.props.setSession({})
+        Cookies.remove('session')
+      })
       .finally(() => handleClose())
       .finally(() => history.push('/'))
   }

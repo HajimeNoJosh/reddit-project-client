@@ -25,6 +25,7 @@ class SignIn extends Component {
 
     signIn(this.state)
       .then(res => {
+        this.props.setSession({ token: res.data.user.token, id: res.data.user._id, email: res.data.user.email })
         setSessionCookie({ token: res.data.user.token, id: res.data.user._id, email: res.data.user.email })
       })
       .then(() => this.props.handleClose())
@@ -38,7 +39,7 @@ class SignIn extends Component {
         <div className='sidebarsignin'>
           <h3> Log in </h3>
           <Form onSubmit={this.onSignIn}>
-            <Form.Group controlId="email">
+            <Form.Group controlId="signin-email">
               <Form.Control
                 required
                 type="text"
@@ -48,7 +49,7 @@ class SignIn extends Component {
                 onChange={this.handleChange}
               />
             </Form.Group>
-            <Form.Group controlId="password">
+            <Form.Group controlId="signin-password">
               <Form.Control
                 required
                 name="password"

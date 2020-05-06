@@ -58,11 +58,11 @@ const Routes = (props) => {
   const switchModalType = (type) => {
     switch (type) {
     case 'Sign Up':
-      return <SignUp modalType={openModal} handleClose={handleClose} setUser={props.setUser} alert={makeAlert} />
+      return <SignUp setSession={props.setSession} modalType={openModal} handleClose={handleClose} setUser={props.setUser} alert={makeAlert} />
     case 'Sign In':
-      return <SignIn modalType={openModal} handleClose={handleClose} setUser={props.setUser} alert={makeAlert} />
+      return <SignIn setSession={props.setSession} modalType={openModal} handleClose={handleClose} setUser={props.setUser} alert={makeAlert} />
     case 'Change Password':
-      return <ChangePassword handleClose={handleClose} alert={makeAlert} user={props.user} />
+      return <ChangePassword modalType={openModal} handleClose={handleClose} alert={makeAlert} user={props.user} />
     default:
       return <PostOnePage handleClose={handleClose} alert={makeAlert} user={props.user} />
     }
@@ -164,10 +164,11 @@ const Routes = (props) => {
         <main>
           <Switch location={background || location }>
             <Route user={props.session} path='/sign-out' render={() => (
-              <SignOut handleClose={handleClose} alert={makeAlert} user={props.session} />
+              <SignOut setSession={props.setSession} handleClose={handleClose} alert={makeAlert} user={props.session} />
             )} />
             <Route user={props.session} exact path='/' render={() => (
               <Body
+                session={props.session}
                 openModal={openModal}
                 background={background}
                 alert={makeAlert}

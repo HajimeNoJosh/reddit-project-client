@@ -23,11 +23,11 @@ class SignUp extends Component {
 
   onSignUp = event => {
     event.preventDefault()
-    console.log(this.props)
 
     signUp(this.state)
       .then(() => signIn(this.state))
       .then(res => {
+        this.props.setSession({ token: res.data.user.token, id: res.data.user._id, email: res.data.user.email })
         setSessionCookie({ token: res.data.user.token, id: res.data.user._id, email: res.data.user.email })
       })
       .then(() => this.props.handleClose())
@@ -49,7 +49,7 @@ class SignUp extends Component {
         <div className='sidebarsignup'>
           <h3> Sign Up </h3>
           <Form onSubmit={this.onSignUp}>
-            <Form.Group controlId="email">
+            <Form.Group controlId="signup-email">
               <Form.Label>Email address</Form.Label>
               <Form.Control
                 required
@@ -60,7 +60,7 @@ class SignUp extends Component {
                 onChange={this.handleChange}
               />
             </Form.Group>
-            <Form.Group controlId="password">
+            <Form.Group controlId="singup-password">
               <Form.Label>Password</Form.Label>
               <Form.Control
                 required
